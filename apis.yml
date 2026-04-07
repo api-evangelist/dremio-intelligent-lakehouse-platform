@@ -1,9 +1,8 @@
 aid: dremio-intelligent-lakehouse-platform
 name: Dremio | Intelligent Lakehouse Platform
 description: >-
-  Dremio is the only lakehouse built natively on Apache Iceberg, Polaris, and
-  Arrow - providing flexibility, preventing lock-in, and enabling
-  community-driven innovation. 
+  Dremio is the only lakehouse built natively on Apache Iceberg, Polaris, and Arrow
+  - providing flexibility, preventing lock-in, and enabling community-driven innovation.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -20,9 +19,9 @@ apis:
       dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform
     name: Dremio | Intelligent Lakehouse Platform
     description: >-
-      Dremio is the only lakehouse built natively on Apache Iceberg, Polaris,
-      and Arrow - providing flexibility, preventing lock-in, and enabling
-      community-driven innovation. 
+      Dremio is the only lakehouse built natively on Apache Iceberg, Polaris, and
+      Arrow - providing flexibility, preventing lock-in, and enabling community-driven
+      innovation.
     humanURL: ' https://www.dremio.com/platform/'
     tags:
       - API
