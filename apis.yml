@@ -57,6 +57,18 @@ common:
     url: https://developer.dremio.com/
   - type: Community
     url: https://community.dremio.com/
+  - type: Integrations
+    url: https://www.dremio.com/partners/
+integrations:
+  - name: Become a Partner
+  - name: Azure Logo
+  - name: AWS
+  - name: dell emc fit
+  - name: MINIO wordmark
+  - name: Netapp Success With Dremio
+  - name: purestorage
+  - name: sponsor tableau
+  - name: vast data
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
