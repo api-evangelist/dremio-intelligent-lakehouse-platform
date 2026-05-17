@@ -44,7 +44,7 @@ apis:
         url: https://developer.dremio.com/
       - type: Community
         url: https://community.dremio.com/
-      - type: GitHub Organization
+      - type: GitHubOrganization
         url: https://github.com/dremio-community
       - type: Support
         url: https://support.dremio.com/hc/en-us
