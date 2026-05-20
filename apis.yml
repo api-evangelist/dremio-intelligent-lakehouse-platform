@@ -49,6 +49,8 @@ apis:
       - type: Support
         url: https://support.dremio.com/hc/en-us
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/dremio
   - type: Website
     url: https://www.dremio.com/
   - type: Documentation
