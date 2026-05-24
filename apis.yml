@@ -61,6 +61,8 @@ common:
     url: https://community.dremio.com/
   - type: Integrations
     url: https://www.dremio.com/partners/
+  - type: LLMsTxt
+    url: https://docs.dremio.com/llms.txt
 integrations:
   - name: Become a Partner
   - name: Azure Logo
