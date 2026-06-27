@@ -40,7 +40,7 @@ apis:
         url: https://www.dremio.com/platform/
       - type: Documentation
         url: https://docs.dremio.com/
-      - type: Developer Portal
+      - type: DeveloperPortal
         url: https://developer.dremio.com/
       - type: Community
         url: https://community.dremio.com/
@@ -55,13 +55,13 @@ common:
     url: https://www.dremio.com/
   - type: Documentation
     url: https://docs.dremio.com/
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://developer.dremio.com/
   - type: Community
     url: https://community.dremio.com/
   - type: Integrations
     url: https://www.dremio.com/partners/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.dremio.com/llms.txt
 integrations:
   - name: Become a Partner
