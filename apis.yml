@@ -49,6 +49,12 @@ apis:
       - type: Support
         url: https://support.dremio.com/hc/en-us
 common:
+  - type: VulnerabilityDisclosure
+    url: security/dremio-intelligent-lakehouse-platform-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/dremio-intelligent-lakehouse-platform-domain-security.yml
+  - type: Authentication
+    url: authentication/dremio-intelligent-lakehouse-platform-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/dremio
   - type: Website
@@ -63,6 +69,8 @@ common:
     url: https://www.dremio.com/partners/
   - type: LlmsText
     url: https://docs.dremio.com/llms.txt
+  - url: https://www.dremio.com/blog/feed/
+    type: Blog
 integrations:
   - name: Become a Partner
   - name: Azure Logo

@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/dremio-intelligent-lakehouse-platform-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth access token or Personal Access Token
+  sources:
+  - openapi/dremio-intelligent-lakehouse-platform-openapi.yml
