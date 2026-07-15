@@ -49,6 +49,8 @@ apis:
       - type: Support
         url: https://support.dremio.com/hc/en-us
 common:
+  - type: AgenticAccess
+    url: agentic-access/dremio-intelligent-lakehouse-platform-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/dremio-intelligent-lakehouse-platform-vulnerability-disclosure.yml
   - type: DomainSecurity
