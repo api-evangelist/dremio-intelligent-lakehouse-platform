@@ -1,0 +1,93 @@
+openapi: 3.1.0
+info:
+  title: Dremio Intelligent Lakehouse REST Authentication Jobs API
+  version: 3.0.0
+  description: Best-effort OpenAPI for Dremio's v3 REST API covering the catalog, jobs, reflections, sources, scripts, personal access tokens, and roles. Auth uses a bearer access token (OAuth or Personal Access Token).
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+    url: https://docs.dremio.com/
+servers:
+- url: https://{hostname}/api/v3
+  description: A Dremio server (self-hosted; substitute your hostname)
+  variables:
+    hostname:
+      default: dremio.example.com
+security:
+- bearerAuth: []
+tags:
+- name: Jobs
+paths:
+  /job:
+    post:
+      tags:
+      - Jobs
+      summary: Submit a SQL query as a job
+      operationId: submitJob
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sql:
+                  type: string
+                context:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Job submitted; returns job id
+  /job/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Jobs
+      summary: Get job status
+      operationId: getJob
+      responses:
+        '200':
+          description: Job status
+  /job/{id}/results:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Jobs
+      summary: Fetch results for a completed job
+      operationId: getJobResults
+      responses:
+        '200':
+          description: Job results
+  /job/{id}/cancel:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Jobs
+      summary: Cancel a running job
+      operationId: cancelJob
+      responses:
+        '204':
+          description: Cancelled
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth access token or Personal Access Token

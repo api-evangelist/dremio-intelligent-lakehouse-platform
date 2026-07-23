@@ -1,0 +1,84 @@
+openapi: 3.1.0
+info:
+  title: Dremio Intelligent Lakehouse REST Authentication Catalog API
+  version: 3.0.0
+  description: Best-effort OpenAPI for Dremio's v3 REST API covering the catalog, jobs, reflections, sources, scripts, personal access tokens, and roles. Auth uses a bearer access token (OAuth or Personal Access Token).
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+    url: https://docs.dremio.com/
+servers:
+- url: https://{hostname}/api/v3
+  description: A Dremio server (self-hosted; substitute your hostname)
+  variables:
+    hostname:
+      default: dremio.example.com
+security:
+- bearerAuth: []
+tags:
+- name: Catalog
+paths:
+  /catalog:
+    get:
+      tags:
+      - Catalog
+      summary: Retrieve the catalog for the current Dremio instance
+      operationId: listCatalog
+      parameters:
+      - name: include
+        in: query
+        schema:
+          type: string
+          enum:
+          - permissions
+          - datasetCount
+      responses:
+        '200':
+          description: Catalog entries
+  /catalog/{id}:
+    parameters:
+    - $ref: '#/components/parameters/CatalogId'
+    get:
+      tags:
+      - Catalog
+      summary: Get a catalog entity by ID
+      operationId: getCatalogEntity
+      responses:
+        '200':
+          description: Catalog entity
+    delete:
+      tags:
+      - Catalog
+      summary: Delete a catalog entity
+      operationId: deleteCatalogEntity
+      responses:
+        '204':
+          description: Deleted
+  /catalog/by-path/{path}:
+    parameters:
+    - name: path
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Catalog
+      summary: Get a catalog entity by path
+      operationId: getCatalogByPath
+      responses:
+        '200':
+          description: Catalog entity
+components:
+  parameters:
+    CatalogId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth access token or Personal Access Token

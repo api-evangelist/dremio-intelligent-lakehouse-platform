@@ -1,0 +1,46 @@
+openapi: 3.1.0
+info:
+  title: Dremio Intelligent Lakehouse REST Authentication API
+  version: 3.0.0
+  description: Best-effort OpenAPI for Dremio's v3 REST API covering the catalog, jobs, reflections, sources, scripts, personal access tokens, and roles. Auth uses a bearer access token (OAuth or Personal Access Token).
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+    url: https://docs.dremio.com/
+servers:
+- url: https://{hostname}/api/v3
+  description: A Dremio server (self-hosted; substitute your hostname)
+  variables:
+    hostname:
+      default: dremio.example.com
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+paths:
+  /apiv2/login:
+    post:
+      tags:
+      - Authentication
+      summary: Authenticate with username and password and receive a token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Authentication token returned
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth access token or Personal Access Token
