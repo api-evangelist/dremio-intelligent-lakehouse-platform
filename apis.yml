@@ -5,9 +5,22 @@ description: >-
   Polaris, and Arrow, combining AI-powered analytics with unified data access
   and governance across multiple data sources without requiring ETL pipelines.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/dremio-intelligent-lakehouse-platform.png
 tags:
   - Data
   - Analytics
@@ -21,33 +34,111 @@ created: '2025-07-15'
 modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform
-    name: Dremio | Intelligent Lakehouse Platform
-    description: >-
-      Dremio is an agentic lakehouse platform built natively on Apache Iceberg,
-      Polaris, and Arrow. It provides AI-powered analytics, an intelligent SQL
-      query engine, an AI semantic layer, and an open catalog for unified
-      metadata management and governance.
-    humanURL: https://www.dremio.com/platform/
-    tags:
-      - Data
-      - Analytics
-      - Lakehouse
-      - SQL
-      - AI
-    properties:
-      - type: Website
-        url: https://www.dremio.com/platform/
-      - type: Documentation
-        url: https://docs.dremio.com/
-      - type: DeveloperPortal
-        url: https://developer.dremio.com/
-      - type: Community
-        url: https://community.dremio.com/
-      - type: GitHubOrganization
-        url: https://github.com/dremio-community
-      - type: Support
-        url: https://support.dremio.com/hc/en-us
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform
+  name: Dremio | Intelligent Lakehouse Platform
+  description: >-
+    Dremio is an agentic lakehouse platform built natively on Apache Iceberg, Polaris, and Arrow. It provides
+    AI-powered analytics, an intelligent SQL query engine, an AI semantic layer, and an open catalog for
+    unified metadata management and governance.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Data
+  - Analytics
+  - Lakehouse
+  - SQL
+  - AI
+  properties:
+  - type: Website
+    url: https://www.dremio.com/platform/
+  - type: Documentation
+    url: https://docs.dremio.com/
+  - type: DeveloperPortal
+    url: https://developer.dremio.com/
+  - type: Community
+    url: https://community.dremio.com/
+  - type: GitHubOrganization
+    url: https://github.com/dremio-community
+  - type: Support
+    url: https://support.dremio.com/hc/en-us
+- aid: >-
+    dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-authentication-api
+  name: Dremio | Intelligent Lakehouse Platform Authentication API
+  description: >-
+    The Authentication API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for authentication.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-catalog-api
+  name: Dremio | Intelligent Lakehouse Platform Catalog API
+  description: >-
+    The Catalog API from Dremio | Intelligent Lakehouse Platform — 3 operation(s) for catalog.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-catalog-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-jobs-api
+  name: Dremio | Intelligent Lakehouse Platform Jobs API
+  description: The Jobs API from Dremio | Intelligent Lakehouse Platform — 4 operation(s) for jobs.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-jobs-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-pat-api
+  name: Dremio | Intelligent Lakehouse Platform PAT API
+  description: The PAT API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for pat.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - PAT
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-pat-api-openapi.yml
+- aid: >-
+    dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-reflections-api
+  name: Dremio | Intelligent Lakehouse Platform Reflections API
+  description: >-
+    The Reflections API from Dremio | Intelligent Lakehouse Platform — 2 operation(s) for reflections.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Reflections
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-reflections-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-roles-api
+  name: Dremio | Intelligent Lakehouse Platform Roles API
+  description: The Roles API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for roles.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-roles-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-scripts-api
+  name: Dremio | Intelligent Lakehouse Platform Scripts API
+  description: >-
+    The Scripts API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for scripts.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Scripts
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-scripts-api-openapi.yml
+- aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-sources-api
+  name: Dremio | Intelligent Lakehouse Platform Sources API
+  description: >-
+    The Sources API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for sources.
+  humanURL: https://www.dremio.com/platform/
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/dremio-intelligent-lakehouse-platform-sources-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/dremio-intelligent-lakehouse-platform-agentic-access.yml
