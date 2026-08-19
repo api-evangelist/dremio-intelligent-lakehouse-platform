@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dremio Intelligent Lakehouse REST Authentication Scripts API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SQL scripts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{hostname}/api/v3/scripts"
+          },
+          "docs": "List SQL scripts"
+        },
+        {
+          "info": {
+            "name": "Create a SQL script",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{hostname}/api/v3/scripts"
+          },
+          "docs": "Create a SQL script"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

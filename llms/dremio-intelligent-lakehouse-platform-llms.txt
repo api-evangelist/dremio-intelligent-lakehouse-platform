@@ -1,0 +1,182 @@
+# Dremio Documentation
+
+> Official documentation for Dremio — a data lakehouse platform for running high-performance SQL queries directly on cloud storage and data lakes, without moving data.
+> Dremio is available as a fully managed cloud service (Dremio Cloud) and as a self-managed deployment (Dremio Enterprise). Default to Dremio Cloud documentation. Only reference Dremio Enterprise documentation when the user is asking about self-managed or on-premises deployments.
+
+## Dremio Cloud
+
+### Get Started
+- [Sign Up](https://www.dremio.com/get-started): Create a Dremio Cloud account and your first project at dremio.com/get-started
+- [Quick Tour](https://docs.dremio.com/dremio-cloud/get-started/quick-tour): Hands-on introduction to the Dremio console — covers the Home, Open Catalog, SQL Runner, and Jobs pages and how to navigate the interface
+- [Use Cases](https://docs.dremio.com/dremio-cloud/get-started/use-case): Step-by-step guide to building your first agentic lakehouse use case using your own data during a Dremio Cloud trial
+
+### About
+- [Architecture](https://docs.dremio.com/dremio-cloud/about/architecture): How Dremio Cloud is architected — data plane (Amazon S3 / object storage), execution plane (MPP model with caching layers), and control plane hosted by Dremio
+- [Concepts](https://docs.dremio.com/dremio-cloud/about/concepts): Learn about core platform concepts including organizations, projects, compute engines, and the Open Catalog
+- [Regions](https://docs.dremio.com/dremio-cloud/about/regions): Available cloud regions for Dremio project deployment, and guidance on selecting a region based on network proximity and data residency requirements
+
+### Bring Data
+- [Connect Data Sources](https://docs.dremio.com/dremio-cloud/bring-data/connect/): Learn how to connect to data sources — lakehouse catalogs, object storage, and databases
+- [Load Data](https://docs.dremio.com/dremio-cloud/bring-data/load): Learn how to load data into Apache Iceberg tables using COPY INTO, autoingest pipes, or local file upload (CSV, JSON, Parquet)
+- [Prepare Data](https://docs.dremio.com/dremio-cloud/bring-data/prepare): Learn how to transform and prepare your data — structured and unstructured — by combining sources, creating views, and using SQL functions
+
+### Explore & Analyze
+- [Discover](https://docs.dremio.com/dremio-cloud/explore-analyze/discover): Learn how to discover data using AI-enabled semantic search, catalog browsing, and metadata cards
+- [Client Applications](https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/): Connect BI tools and SQL clients to Dremio Cloud
+- [AI Agent](https://docs.dremio.com/dremio-cloud/explore-analyze/ai-agent): Learn how to use Dremio's AI Agent to discover datasets, analyze data with natural language, and generate visualizations directly in the console
+
+### Manage & Govern
+- [Optimization](https://docs.dremio.com/dremio-cloud/manage-govern/optimization): Learn how Dremio automatically optimizes Iceberg tables through file compaction, clustering, partition evolution, and manifest rewriting
+- [Row & Column Policies](https://docs.dremio.com/dremio-cloud/manage-govern/row-column-policies): Learn how to implement row-access and column-masking policies using UDFs to control access to sensitive data for compliance
+- [Lineage](https://docs.dremio.com/dremio-cloud/manage-govern/lineage): Learn how to trace and visualize a dataset's relationships — source, parent datasets, and child datasets — using Dremio's lineage graph
+- [Wikis & Labels](https://docs.dremio.com/dremio-cloud/manage-govern/wikis-labels): Learn how to document datasets with wikis (rich text, Markdown) and organize them with labels — including AI-assisted generation of wikis and labels
+
+### Admin
+- [Engines](https://docs.dremio.com/dremio-cloud/admin/engines/): Learn how to create, configure, and scale compute engines — including engine sizes, replica settings, and auto-scaling behavior
+- [Projects](https://docs.dremio.com/dremio-cloud/admin/projects/): Learn how to manage projects — including storage options (Dremio-managed or bring your own S3 bucket) and the built-in preview engine
+- [Users](https://docs.dremio.com/dremio-cloud/admin/users): Learn how to invite and manage local users, SSO users, and service users (non-human accounts for programmatic API access) within your Dremio Cloud organization
+- [Model Providers](https://docs.dremio.com/dremio-cloud/admin/model-providers/): Learn how to configure external LLM providers (e.g. OpenAI, Azure OpenAI) as the default model provider for Dremio's AI Agent and AI functions
+- [Monitoring](https://docs.dremio.com/dremio-cloud/admin/monitor/): Learn how to access audit logs for tracking creation and modification of Dremio resources via the sys.project.history.events system table
+- [Performance](https://docs.dremio.com/dremio-cloud/admin/performance/): Learn how Dremio accelerates views and SQL queries using Reflections — covers both Autonomous Reflections (automatic) and Manual Reflections
+- [Open Catalog](https://docs.dremio.com/dremio-cloud/admin/open-catalog/): Learn how to manage your built-in Apache Polaris-powered catalog, including reflection settings, metadata refresh, and access privileges
+- [Subscription & Usage](https://docs.dremio.com/dremio-cloud/admin/subscription/usage): Learn about billable usage in Dremio Cloud — DCUs (compute), LLM tokens (AI features), and storage — and how to monitor consumption
+
+### Security
+- [Authentication](https://docs.dremio.com/dremio-cloud/security/authentication/): Learn how to authenticate to Dremio Cloud — covers SSO, username/password, Personal Access Tokens (PAT), OAuth access tokens, and External JWT exchange for different connection types and use cases
+- [Privileges](https://docs.dremio.com/dremio-cloud/security/privileges): Learn about the privilege model and how to grant access to securable objects (catalogs, schemas, tables, views)
+- [Roles](https://docs.dremio.com/dremio-cloud/security/roles): Learn how to create and manage roles to organize privileges across users at scale, including child-role hierarchies
+- [Compliance](https://docs.dremio.com/dremio-cloud/security/compliance): Learn about Dremio Cloud's compliance certifications, including SOC 2 Type II, and data residency commitments
+- [PrivateLink](https://docs.dremio.com/dremio-cloud/security/privatelink): Learn how to enable Dremio PrivateLink for secure private connectivity between your AWS VPC and Dremio services without exposing traffic to the public internet
+
+### SQL Reference
+- [SQL Commands](https://docs.dremio.com/dremio-cloud/sql/commands/): Reference for all supported SQL commands — DDL (CREATE, ALTER, DROP, GRANT, REVOKE) and DML (SELECT, INSERT, UPDATE, DELETE, MERGE, OPTIMIZE TABLE, ROLLBACK TABLE, TRUNCATE)
+- [SQL Functions](https://docs.dremio.com/dremio-cloud/sql/sql-functions/): Reference for all built-in functions (aggregate, AI, binary, bitwise, boolean, conditional, conversion, cryptography, date/time, geospatial, math, regular expressions, semi-structured data, string, and window functions)
+- [Data Types](https://docs.dremio.com/dremio-cloud/sql/data-types/): Reference for supported SQL data types — numeric, string, binary, boolean, date/time, and semi-structured (STRUCT, LIST, MAP)
+- [System Tables](https://docs.dremio.com/dremio-cloud/sql/system-tables/): Reference for read-only system tables exposing runtime and historical metadata for jobs, reflections, engines, users, roles, pipes, privileges, usage, and results cache
+- [Table Functions](https://docs.dremio.com/dremio-cloud/sql/table-functions/): Reference for parameterized table functions for querying reflection recommendations, lineage, and refresh settings
+- [Information Schema](https://docs.dremio.com/dremio-cloud/sql/information-schema/): Reference for ANSI-standard information schema views (tables, columns, schemata, catalogs, views, coercions)
+
+### REST API
+- [Catalog API](https://docs.dremio.com/dremio-cloud/api/catalog/): Manage Open Catalog objects (sources, folders, tables, views, wikis, tags, and lineage) via REST — also supports the Iceberg REST Catalog API
+- [SQL API](https://docs.dremio.com/dremio-cloud/api/sql): Submit SQL queries programmatically and retrieve the job ID for tracking query results
+- [Engines API](https://docs.dremio.com/dremio-cloud/api/engines): Create, start, stop, and configure compute engines via REST
+- [Reflections API](https://docs.dremio.com/dremio-cloud/api/reflection/): Create, update, delete, and retrieve raw, aggregation, and external Reflections via REST
+- [Personal Access Tokens](https://docs.dremio.com/dremio-cloud/api/personal-access-token): Learn how to generate and manage Personal Access Tokens (PATs) for authenticating to Dremio via client tools and JDBC
+- [OAuth Token](https://docs.dremio.com/dremio-cloud/api/oauth-token): Learn how to obtain OAuth access tokens from Dremio's authorization server for programmatic API authentication
+
+### AI Integration
+- [AI Integration](https://docs.dremio.com/dremio-cloud/ai-integration/): Connect AI tools directly to Dremio — supports MCP (for Claude, ChatGPT, Cursor, VS Code) and a command-line interface, with OAuth and PAT authentication options; all tools enforce Dremio's existing access controls
+- [MCP Server](https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server): Connect AI agents to Dremio using the Model Context Protocol — choose Dremio-hosted (OAuth for Claude.ai and ChatGPT) or self-hosted (PAT for Claude Code, Claude Desktop, Cursor, and VS Code)
+- [CLI](https://docs.dremio.com/dremio-cloud/ai-integration/cli): A command-line tool for querying Dremio, browsing the catalog, managing Reflections, monitoring jobs, and automating workflows — install via pip or uv, authenticates with a PAT, outputs JSON/CSV/pretty
+
+### Developer
+- [Arrow Flight](https://docs.dremio.com/dremio-cloud/developer/arrow-flight): Learn how to build client applications using Apache Arrow Flight for high-performance data transfer from Dremio — faster than ODBC/JDBC by avoiding serialization overhead
+- [Arrow Flight SQL](https://docs.dremio.com/dremio-cloud/developer/arrow-flight-sql): Learn how to use Apache Arrow Flight SQL to run queries, create prepared statements, and fetch SQL metadata from Dremio
+- [Python](https://docs.dremio.com/dremio-cloud/developer/python): Learn how to develop Python client applications using Arrow Flight to connect to and query Dremio using token-based authentication
+- [dbt](https://docs.dremio.com/dremio-cloud/developer/dbt): Learn how to use the dbt-dremio connector to transform data in sources connected to a Dremio Cloud project
+- [Data Formats](https://docs.dremio.com/dremio-cloud/developer/data-formats/): Learn about Dremio's supported file formats and open table formats (Apache Iceberg, Delta Lake, Parquet, CSV)
+- [VS Code](https://docs.dremio.com/dremio-cloud/developer/vs-code): Learn how to use the Dremio VS Code extension to discover, explore, and analyze data with natural language and SQL side by side from your IDE
+
+### Help & Support
+- [Limits](https://docs.dremio.com/dremio-cloud/help-support/limits): Reference for resource limits per Dremio Cloud organization (engines, projects, storage, and more)
+- [Well-Architected Framework](https://docs.dremio.com/dremio-cloud/help-support/well-architected-framework/): Design principles and best practices for building and operating optimal Dremio Cloud deployments
+- [Keyboard Shortcuts](https://docs.dremio.com/dremio-cloud/help-support/keyboard-shortcuts): Reference for keyboard shortcuts available in the Dremio console and SQL Runner
+
+### Changelog
+- [Release Notes](https://docs.dremio.com/dremio-cloud/changelog): Full history of Dremio Cloud feature releases and updates
+
+---
+
+## Dremio Enterprise
+
+### Get Started
+- [Overview](https://docs.dremio.com/current/get-started/): Choose between the Enterprise Edition Free Trial on Kubernetes (all features unlocked) or the Community Edition on Docker (limited features, for local testing and evaluation)
+- [Community Edition on Docker](https://docs.dremio.com/current/get-started/docker): Learn how to deploy the Community Edition of Dremio locally using Docker for testing and evaluation
+- [Enterprise Edition Free Trial](https://docs.dremio.com/current/get-started/kubernetes-trial): Learn how to deploy the Enterprise Edition Free Trial on Kubernetes with all features unlocked
+
+### What is Dremio
+- [Architecture](https://docs.dremio.com/current/what-is-dremio/architecture): Learn how Dremio Enterprise is architected — columnar execution engine, Apache Arrow in-memory processing, distributed execution model, Reflections, and integrations with BI tools and cloud storage
+- [Key Concepts](https://docs.dremio.com/current/what-is-dremio/key-concepts): Learn core Dremio concepts including tables, views, sources, spaces, the catalog, and how they fit together
+
+### Deploy
+- [Deploy on Kubernetes](https://docs.dremio.com/current/deploy-dremio/deploy-on-kubernetes): Learn how to deploy Dremio Enterprise on Kubernetes (cloud-provisioned or on-premises) using the Helm chart
+- [Configuring Kubernetes](https://docs.dremio.com/current/deploy-dremio/configuring-kubernetes/): Learn how to configure your Helm values for Kubernetes deployment — covers storage, networking, TLS, and resource settings
+- [Managing Engines](https://docs.dremio.com/current/deploy-dremio/managing-engines-kubernetes): Learn how to add, scale, and manage executor engines in a Kubernetes-based Dremio deployment
+- [Other Deployment Options](https://docs.dremio.com/current/deploy-dremio/other-options/): Learn about alternative deployment options including Hadoop/YARN deployment and Dremio AWS Edition
+
+### Data Sources
+- [Databases](https://docs.dremio.com/current/data-sources/databases/): Learn how to connect to relational databases, NoSQL databases, and data warehouses (Amazon Redshift, OpenSearch, and more) — including external query support for running native SQL against the source
+- [Object Storage](https://docs.dremio.com/current/data-sources/object/): Learn how to connect to object storage sources (Amazon S3, Azure Storage, Google Cloud Storage) and format files and folders as tables
+- [Lakehouse Catalogs](https://docs.dremio.com/current/data-sources/lakehouse-catalogs/): Learn how to connect to Iceberg-compatible lakehouse catalogs — Open Catalog (external), AWS Glue Data Catalog, Microsoft OneLake, and Snowflake Open Catalog
+- [Open Catalog](https://docs.dremio.com/current/data-sources/open-catalog/): Learn about Dremio's built-in Apache Polaris-based lakehouse catalog — Iceberg REST compatibility, RBAC, automated table maintenance, and integration with data products
+
+### Load Data
+- [Auto-ingestion](https://docs.dremio.com/current/load-data/autoingestion): Learn how to use autoingest pipes to automatically ingest files from object storage into Apache Iceberg tables as they arrive (event-driven, micro-batch processing with file deduplication)
+- [Clustering](https://docs.dremio.com/current/load-data/clustering): Learn how to cluster Iceberg tables by sorting records based on column values to improve query performance by reducing data scanned
+
+### Acceleration
+- [Reflections](https://docs.dremio.com/current/acceleration/): Learn how Dremio uses Reflections — precomputed, optimized copies of data — to transparently accelerate queries without requiring changes to SQL
+- [Manual Reflections](https://docs.dremio.com/current/acceleration/manual-reflections/): Learn how to manually create and manage raw and aggregation reflections when Autonomous Reflections are not enabled or manual control is needed
+- [Autonomous Reflections](https://docs.dremio.com/current/acceleration/autonomous-reflections): Learn how Dremio automatically creates, manages, and drops Reflections based on query patterns for Iceberg tables, Parquet datasets, and views
+
+### Data Products
+- [Develop](https://docs.dremio.com/current/data-products/develop): Learn how to build data products by writing SQL or using low-code transformation flows in the SQL Runner
+- [Discover](https://docs.dremio.com/current/data-products/discover/): Learn how to browse and discover data objects using catalog exploration, AI-enabled semantic search, and starring objects
+- [Govern](https://docs.dremio.com/current/data-products/govern/): Learn how to apply row-access and column-masking policies, track data lineage, and document datasets with wikis and labels
+- [Deploy with dbt](https://docs.dremio.com/current/data-products/deploy-with-dbt): Learn how to use the dbt-dremio connector to transform and deploy data products to Dremio Enterprise
+- [AI Agent](https://docs.dremio.com/current/data-products/ai-agent): Learn how to use Dremio's AI Agent to discover datasets, analyze data with natural language, and generate visualizations
+
+### Admin
+- [Monitoring](https://docs.dremio.com/current/admin/monitoring/): Learn how to monitor Dremio Enterprise — including logs, usage, system telemetry, job history, and node health
+- [Workloads](https://docs.dremio.com/current/admin/workloads/): Learn how to manage job workloads using queue control and job queues to prioritize and limit query resource usage
+- [Automated Backups](https://docs.dremio.com/current/admin/automated-backups): Learn how to enable and configure automated backups of Dremio metadata on a scheduled basis
+- [Model Providers](https://docs.dremio.com/current/admin/model-providers/): Learn how to configure external LLM providers for Dremio's AI Agent and AI functions in Enterprise deployments
+- [Licensing](https://docs.dremio.com/current/admin/licensing/): Learn about Dremio Enterprise licensing requirements — including license key setup for Kubernetes deployments and free trial details
+
+### Security
+- [Authentication](https://docs.dremio.com/current/security/authentication/): Learn how to authenticate to Dremio Enterprise — covers SSO, LDAP, username/password, Personal Access Tokens (PAT), OAuth, and JWT exchange for console access, SQL clients, and machine-to-machine applications
+- [Access Control](https://docs.dremio.com/current/security/rbac/): Learn how to configure granular privileges for users and roles across folders, datasets, schemas, and catalogs — including row-access and column-masking policies
+- [Auditing](https://docs.dremio.com/current/security/auditing/): Learn how to enable and use Dremio's full audit logging — tracks all user activities (logins, query execution, dataset access) in the audit.json file
+- [Secrets Management](https://docs.dremio.com/current/security/secrets-management/): Learn how to use AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault to securely store credentials for data source connections
+- [Compliance](https://docs.dremio.com/current/security/compliance): Learn about Dremio Enterprise's compliance certifications, including SOC 2 Type II, and the shared responsibility model
+
+### Client Applications
+- [Tableau](https://docs.dremio.com/current/client-applications/tableau): Learn how to connect Tableau (Desktop, Server, or Cloud) to Dremio using JDBC or by downloading a TDS file for a preconfigured live connection to a dataset
+- [Power BI](https://docs.dremio.com/current/client-applications/microsoft-power-bi/): Learn how to connect Microsoft Power BI to Dremio to visualize data and create reports
+- [Looker](https://docs.dremio.com/current/client-applications/looker): Learn how to connect Looker to Dremio — supports PAT and username/password authentication
+- [DBeaver](https://docs.dremio.com/current/client-applications/dbeaver): Learn how to connect DBeaver to Dremio for SQL-based data exploration
+- [Drivers](https://docs.dremio.com/current/client-applications/drivers/): Download and configure Dremio's Arrow Flight SQL ODBC and JDBC drivers for connecting SQL clients to Dremio
+
+### SQL Reference
+- [SQL Commands](https://docs.dremio.com/current/reference/sql/commands/): Reference for all supported SQL commands — DDL (CREATE, ALTER, DROP, GRANT, REVOKE), DML (SELECT, INSERT, MERGE, TRUNCATE), and workload queue management (SET/RESET QUEUE)
+- [SQL Functions](https://docs.dremio.com/current/reference/sql/sql-functions/): Reference for all built-in functions (aggregate, AI, binary, bitwise, boolean, conditional, conversion, cryptography, date/time, geospatial, math, regular expressions, semi-structured data, string, and window functions)
+- [Data Types](https://docs.dremio.com/current/reference/sql/data-types/): Reference for supported SQL data types — numeric, string, binary, boolean, date/time, and semi-structured — including type mappings from external sources and time zone support
+- [System Tables](https://docs.dremio.com/current/reference/sql/system-tables/): Reference for read-only system tables exposing runtime and historical metadata for jobs, reflections, engines, users, roles, pipes, privileges, membership, user-defined functions, and usage
+- [Table Functions](https://docs.dremio.com/current/reference/sql/table-functions/): Reference for parameterized table functions for querying reflection lineage and refresh settings
+- [Information Schema](https://docs.dremio.com/current/reference/sql/information-schema/): Reference for ANSI-standard information schema views (tables, columns, schemata, catalogs, views)
+
+### REST API
+- [API Reference](https://docs.dremio.com/current/reference/api/): Full REST API reference for managing sources, jobs, reflections, users, roles, and more via the Dremio v3 API
+
+### Developer
+- [Arrow Flight](https://docs.dremio.com/current/developer/arrow-flight): Learn how to develop applications using Apache Arrow Flight for high-performance data transfer from Dremio — faster than ODBC/JDBC by avoiding serialization overhead, enabled by default on port 32010
+- [Arrow Flight SQL](https://docs.dremio.com/current/developer/arrow-flight-sql): Learn how to use Apache Arrow Flight SQL to run queries, create prepared statements, and fetch SQL metadata from Dremio
+- [Python](https://docs.dremio.com/current/developer/python): Learn how to develop Python client applications using Arrow Flight to connect to Dremio — supports token-based and username/password credentials
+- [Data Formats](https://docs.dremio.com/current/developer/data-formats/): Learn about Dremio's supported file formats and open table formats (Apache Iceberg, Delta Lake, Parquet)
+- [MCP Server](https://docs.dremio.com/current/developer/mcp-server): Learn how to deploy the open-source Dremio MCP Server to connect AI agents to Dremio — supports data exploration, system introspection, and Prometheus metrics modes
+- [ARP Connector](https://docs.dremio.com/current/developer/arp-connector): Learn how to build custom connectors for JDBC-compatible data sources using Dremio's ARP (Advanced Relational Pushdown) framework — includes examples for Salesforce, SQLite, and Sybase
+
+### Help & Support
+- [Well-Architected Framework](https://docs.dremio.com/current/help-support/well-architected-framework/): Design principles and best practices for building and operating optimal Dremio Enterprise deployments
+- [Limits](https://docs.dremio.com/current/help-support/limits): Reference for resource limits in Dremio Enterprise (catalog, execution, metadata, reflections, and workload management)
+- [Keyboard Shortcuts](https://docs.dremio.com/current/help-support/keyboard-shortcuts): Reference for keyboard shortcuts available in the Dremio console and SQL Runner
+- [Support Settings](https://docs.dremio.com/current/help-support/support-settings): Reference for Dremio support settings used for diagnostics and configuration, accessible via Settings > Support
+- [Advanced Topics](https://docs.dremio.com/current/help-support/advanced-topics/): Advanced configuration topics including dremio.conf and dremio.env configuration files, SSL setup, and other advanced scenarios
+- [Knowledge Base](https://docs.dremio.com/current/help-support/knowledge-base/): Knowledge base articles covering known issues, troubleshooting guides, and Kubernetes diagnostics
+
+### Release Notes
+- [Release Notes](https://docs.dremio.com/current/release-notes/): Release notes for Dremio Enterprise, Arrow Flight SQL JDBC, and Arrow Flight SQL ODBC releases
+
+## Optional
+
+- [llms-full.txt](https://docs.dremio.com/llms-full.txt): Full documentation content for Dremio Cloud and Dremio Enterprise

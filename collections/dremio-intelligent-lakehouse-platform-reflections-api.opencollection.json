@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dremio Intelligent Lakehouse REST Authentication Reflections API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reflections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reflections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{hostname}/api/v3/reflection"
+          },
+          "docs": "List reflections"
+        },
+        {
+          "info": {
+            "name": "Create a reflection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{hostname}/api/v3/reflection"
+          },
+          "docs": "Create a reflection"
+        },
+        {
+          "info": {
+            "name": "Get a reflection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{hostname}/api/v3/reflection/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a reflection"
+        },
+        {
+          "info": {
+            "name": "Update a reflection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{hostname}/api/v3/reflection/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a reflection"
+        },
+        {
+          "info": {
+            "name": "Delete a reflection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{hostname}/api/v3/reflection/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a reflection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
