@@ -32,7 +32,7 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/dremio-intelligent-lakehouse-platform/refs/heads/main/apis.yml
 created: '2025-07-15'
 modified: '2026-04-28'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform
   name: Dremio | Intelligent Lakehouse Platform
