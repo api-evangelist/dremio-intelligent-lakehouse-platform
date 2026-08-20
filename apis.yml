@@ -27,6 +27,13 @@ tags:
   - Lakehouse
   - Apache Iceberg
   - SQL
+  - Artificial Intelligence
+tags_raw:
+  - Data
+  - Analytics
+  - Lakehouse
+  - Apache Iceberg
+  - SQL
   - AI
 url: >-
   https://raw.githubusercontent.com/api-evangelist/dremio-intelligent-lakehouse-platform/refs/heads/main/apis.yml
@@ -42,6 +49,12 @@ apis:
     unified metadata management and governance.
   humanURL: https://www.dremio.com/platform/
   tags:
+  - Data
+  - Analytics
+  - Lakehouse
+  - SQL
+  - Artificial Intelligence
+  tags_raw:
   - Data
   - Analytics
   - Lakehouse
@@ -86,6 +99,8 @@ apis:
   description: The Jobs API from Dremio | Intelligent Lakehouse Platform — 4 operation(s) for jobs.
   humanURL: https://www.dremio.com/platform/
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
