@@ -3,91 +3,128 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Dremio | Intelligent Lakehouse Platform
 providerId: dremio-intelligent-lakehouse-platform
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/help-support/limits
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
 tags:
   - Data
   - Analytics
   - Lakehouse
-  - Apache Iceberg
-  - SQL
-  - AI
   - Rate Limiting
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Dremio | Intelligent Lakehouse Platform API
-  surface. Captures per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults
-  are scaffold values to be replaced with published provider limits.
+description: >-
+  Published Dremio Cloud rate limits and resource quotas, read from Dremio's own Limits page on
+  2026-09-06. This replaces the 2026-05-04 scaffold, whose header names and per-tier numbers were
+  bulk-sweep defaults that Dremio never published.
+scope_note: >-
+  Dremio states that rate limits are enforced on a single IP address and apply across all
+  organizations and projects — the throttle is per source IP, not per API key or per account.
+  That is unusual and matters to an agent: several agents sharing an egress IP share one budget.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+headers_note: >-
+  Dremio documents no rate-limit response headers and no exhaustion status code. Checked
+  2026-09-06 on the Limits page and the API Reference overview — the numbers are published as
+  documentation only, with no runtime signal. Recorded null rather than assuming the common
+  X-RateLimit-* set, which is what the previous scaffold did.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  throttled: null
+  quotaExceeded: null
+limit_count: 9
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: API calls per minute
+    scope: ip-address
     metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Dremio | Intelligent Lakehouse Platform
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
+    limit: 1200
+    tier: Enterprise
+  - name: Job results reads
+    scope: ip-address
+    endpoint: /job/{id}/results
+    metric: requests_per_minute
     limit: 1000
-    timeFrame: month
-    applies:
-      - Dremio | Intelligent Lakehouse Platform
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+    tier: Enterprise
+  - name: Job cancel
+    scope: ip-address
+    endpoint: /job/{id}/cancel
     metric: requests_per_minute
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Dremio | Intelligent Lakehouse Platform
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Dremio | Intelligent Lakehouse Platform
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    tier: Enterprise
+  - name: Job status
+    scope: ip-address
+    endpoint: /job/{id}
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Dremio | Intelligent Lakehouse Platform
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    limit: 100
+    tier: Enterprise
+  - name: Username/password login
+    scope: ip-address
+    endpoint: /login/userpass
+    metric: requests_per_second
+    limit: 45
+    tier: Enterprise
+  - name: Login rate per user
+    scope: user
+    metric: requests_per_second
+    limit: 100
+    tier: Enterprise
+  - name: SCIM reads (user)
+    scope: ip-address
+    metric: requests_per_minute
+    limit: 180
+    tier: Enterprise
+  - name: SCIM writes (user)
+    scope: ip-address
+    metric: requests_per_minute
+    limit: 300
+    tier: Enterprise
+  - name: Access control list updates
+    scope: ip-address
+    metric: requests_per_minute
+    limit: 60
+    tier: Enterprise
+quotas:
+  organization:
+    projects: 200
+    users: 15000
+    custom_roles: 5000
+    nested_role_layers: 10
+    enterprise_identity_providers: 1
+    user_invitations_at_once: 10
+    pending_user_invitations: 100
+    daily_user_invitations: 100
+  project:
+    engines: 50
+    sources: 100
+    folder_nesting_depth: 8
+    tables: unlimited
+    views: unlimited
+    scripts_per_user: 1000
+    acl_updates_per_minute: 600
+  datasets:
+    metadata_refresh_data_lake: 15 minutes
+    metadata_refresh_rdbms: 1 hour
+    reflection_refresh_frequency: 1 hour
+    wiki_character_limit: 100000
+    json_files: 300000
+    row_width: 16 MB
+    file_upload_size: 500 MB
+  reflections:
+    maximum: 500
+    autonomous: 100
+  ai_agent:
+    files_per_message: 10
+    max_file_size: 500 MB
+    file_availability: 10 minutes
+    custom_instructions_length: 5000
+    skills_per_user: 20
+    skill_instructions_length: 25000
+  arrow_flight_sql:
+    max_returned_data_volume: 10GB
+    pipeline_drain_timeout: 50 seconds
+  catalog:
+    entity_name_length: 500

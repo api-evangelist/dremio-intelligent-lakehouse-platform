@@ -1,13 +1,91 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/dremio-intelligent-lakehouse-platform-openapi.yml
+generated: '2026-09-06'
+method: searched
+source: openapi/*.yml + Dremio authentication documentation
+docs:
+- https://docs.dremio.com/dremio-cloud/api/
+- https://docs.dremio.com/dremio-cloud/api/oauth-token
+- https://docs.dremio.com/dremio-cloud/api/personal-access-token
+- https://docs.dremio.com/dremio-cloud/security/authentication/personal-access-token
+- https://docs.dremio.com/current/security/authentication/identity-providers/
 summary:
-  types:
-  - http
+  types: [http, oauth2]
+  http_schemes: [bearer]
+  oauth2_flows: [clientCredentials, authorizationCode, tokenExchange]
+  api_key_in: []
+  recommended: >-
+    Dremio recommends exchanging a personal access token for an OAuth access token before using
+    an API application in production.
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: OAuth access token or Personal Access Token
+  description: >-
+    Authorization: Bearer <token>, where the token is either a personal access token (PAT) or an
+    OAuth access token. This is the only scheme the repo's OpenAPI files declare.
   sources:
-  - openapi/dremio-intelligent-lakehouse-platform-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-catalog-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-jobs-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-pat-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-reflections-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-roles-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-scripts-api-openapi.yml
+  - openapi/dremio-intelligent-lakehouse-platform-sources-api-openapi.yml
+- name: personalAccessToken
+  type: http
+  scheme: bearer
+  description: >-
+    A long-lived PAT minted per user in the Dremio console. The token carries that user's
+    permissions. It is the authentication method for the Dremio Developer CLI, the self-hosted
+    MCP server, and the Arrow Flight SQL JDBC/ODBC drivers.
+  managed_by:
+  - listUserTokens
+  - createUserToken
+  docs: https://docs.dremio.com/dremio-cloud/api/personal-access-token
+- name: dremioOAuth
+  type: oauth2
+  description: >-
+    Dremio runs its own OAuth authorization server at https://login.dremio.cloud, discoverable
+    per RFC 8414. Supports client credentials for service users, authorization code with PKCE
+    (S256) and dynamic client registration for MCP clients, and RFC 8693 token exchange for an
+    external OIDC JWT or a PAT.
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    scopes: [dremio.all]
+  - flow: authorizationCode
+    authorizationUrl: https://login.dremio.cloud/oauth/authorize
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    registrationUrl: https://login.dremio.cloud/oauth/register
+    scopes: [dremio.all, offline_access]
+  - flow: tokenExchange
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    scopes: [dremio.all]
+  see: scopes/dremio-intelligent-lakehouse-platform-scopes.yml
+- name: usernamePassword
+  type: http
+  scheme: basic-equivalent
+  description: >-
+    POST /apiv2/login with userName + password returns a token. Legacy, self-managed only, and
+    rate limited to 45 requests per second per IP.
+  operation: login
+  status: legacy
+- name: externalTokenProvider
+  type: openIdConnect
+  description: >-
+    An OIDC provider (Microsoft Entra ID, Okta, LDAP) can authenticate users, and the resulting
+    JWT can be exchanged for a Dremio access token.
+  docs: https://docs.dremio.com/dremio-cloud/api/external-token-providers
+- name: scimHeaderAuth
+  type: http
+  scheme: bearer
+  description: >-
+    SCIM 2.0 provisioning endpoints (/scim/v2) authenticate the identity provider with header
+    auth.
+  docs: https://docs.dremio.com/current/security/authentication/identity-providers/scim
+agent_notes: >-
+  Three distinct credentials serve three agent surfaces and they are not interchangeable: the
+  hosted MCP server takes OAuth only, the self-hosted MCP server and the CLI take a PAT only, and
+  a service user for machine-to-machine work takes client_id + client_secret. Whatever the
+  credential, authorization is the authenticated principal's RBAC — the OAuth scope is always
+  dremio.all and grants nothing narrower.

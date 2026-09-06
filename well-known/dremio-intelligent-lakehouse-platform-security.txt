@@ -1,0 +1,7 @@
+################################################################
+## Dremio uses security@dremio.com for responsible disclosure ##
+################################################################
+
+Contact: mailto:security@dremio.com
+Policy: https://www.dremio.com/platform/security/responsible-disclosure-limitations/
+Hiring: https://www.dremio.com/careers/

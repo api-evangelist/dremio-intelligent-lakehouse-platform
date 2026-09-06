@@ -1,0 +1,71 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/api/
+versioning:
+  scheme: uri-path
+  current: v0
+  cloud_base: https://api.dremio.cloud/v0/
+  self_managed_current: v3
+  self_managed_base: https://{hostname}/api/v3
+  docs: https://docs.dremio.com/dremio-cloud/api/
+  note: >-
+    Two products, two version strings. Dremio Cloud serves /v0/ and Dremio Enterprise serves
+    /api/v3 — v3 is the older, larger, self-managed surface and v0 is the newer cloud one. They
+    are not a migration ladder, and an agent must not assume an operation on one exists on the
+    other. Dremio publishes no API version-support or version-sunset policy for either.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  api_deprecation_policy: none-published
+  note: >-
+    No API deprecation policy, no Deprecation/Sunset header support (RFC 8594), and no dated
+    end-of-life table for API versions could be found on docs.dremio.com. The one deprecation
+    Dremio does state plainly is at the driver layer: the legacy Dremio JDBC driver is documented
+    as frozen — "The Dremio JDBC driver will be not enhanced or fixed going forward" — with the
+    Arrow Flight SQL JDBC driver named as the replacement. That is a product deprecation
+    statement, not an API-lifecycle policy, so no Deprecation pointer is emitted.
+  evidence:
+  - url: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/jdbc-legacy
+    status: 200
+    finding: legacy JDBC driver frozen, Arrow Flight SQL JDBC recommended
+sla:
+  url: null
+  uptime_target: '99.99%'
+  uptime_target_source: https://www.dremio.com/pricing/
+  note: >-
+    99.99% is a marketing figure on the pricing page. No SLA document, credit schedule or
+    measurement window is published, so this is a claim rather than a commitment.
+status_page:
+  url: https://status.dremio.com/
+  status: 200
+  verified: '2026-09-06'
+  scope: Dremio Cloud
+  features:
+  - incident history
+  - email subscription
+  - SMS subscription
+  note: >-
+    Live and real — the page titles itself "Dremio Cloud Status" and offers incident
+    subscriptions. It covers the managed service only; a self-managed Dremio Enterprise
+    deployment has no status surface here.
+release_notes:
+  cloud: https://docs.dremio.com/dremio-cloud/changelog
+  enterprise: https://docs.dremio.com/current/release-notes/
+  dependencies_security: https://docs.dremio.com/current/release-notes/dependencies
+  drivers: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/release-notes/
+  see: changelog/dremio-intelligent-lakehouse-platform-changelog.yml
+security_bulletins:
+  note: >-
+    Dremio's security page states that security-related notifications are published under a
+    Security Bulletins section, with security fixes listed in the release notes.
+  source: https://www.dremio.com/platform/security/
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in this repo's OpenAPI set carries deprecated: true.
+supported_versions:
+  documentation:
+  - product: Dremio Cloud
+    versions: [current]
+  - product: Dremio Enterprise
+    versions: ['26.x', '25.x']
+    note: docs.dremio.com serves both, which is the only public signal of the support window.

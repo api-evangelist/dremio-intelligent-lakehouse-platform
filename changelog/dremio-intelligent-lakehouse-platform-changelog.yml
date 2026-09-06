@@ -1,0 +1,56 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/changelog
+urls:
+  cloud: https://docs.dremio.com/dremio-cloud/changelog
+  enterprise_release_notes: https://docs.dremio.com/current/release-notes/
+  driver_release_notes: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/release-notes/
+scheme:
+  cloud: dated-continuous
+  cloud_note: >-
+    Dremio Cloud is not versioned publicly. The changelog is a dated stream grouped into
+    "What's New" and "Improvements & Fixes", with each entry carrying its internal issue key
+    (DX-#####, DPD-###) — an unusually good practice: a customer can quote the exact ticket back
+    to support.
+  enterprise: semver-major
+  enterprise_note: >-
+    Dremio Enterprise is versioned (current 26.x, with 25.x still documented) and has its own
+    release notes, plus separate release notes for the Arrow Flight SQL JDBC, Arrow Flight SQL
+    ODBC and legacy JDBC drivers, and a dependencies page covering security fixes.
+current:
+  cloud_latest_entry: '2026-09-01'
+  enterprise_current: 26.x
+  enterprise_previous_documented: 25.x
+window: 2026-08-19 to 2026-09-01
+entries:
+- date: '2026-09-01'
+  type: fixes
+  breaking: false
+  highlights:
+  - Fixed incremental Reflection refreshes failing when there were no source data changes (DX-126062).
+  - Fixed failed JDBC/ODBC authentication returning a connection reset instead of a proper authentication error (DX-125712).
+  - Fixed a coordinator memory leak causing crashes under sustained query cancellation load (DX-92889).
+  - Fixed concurrency issues in the query result forwarding layer that failed or falsely cancelled running queries (DX-126104).
+- date: '2026-08-25'
+  type: fixes
+  breaking: false
+  highlights:
+  - Fixed creating a Microsoft SQL Server source without an explicit database port (DX-125663).
+- date: '2026-08-19'
+  type: features
+  breaking: false
+  highlights:
+  - AI agent now supports skills — personal, reusable workflow instructions (DX-117158, DPD-639).
+  - Recursive common table expressions (CTEs) supported in SQL (DX-103922, DPD-325).
+  - PostgreSQL, Oracle and MySQL supported as private sources over AWS PrivateLink (DX-120957).
+  - Agentic dashboards — create and explore visualizations through natural conversation (DX-112138).
+  - Reflection changes (refresh, update, disable, delete) now take effect immediately for query planning instead of after a periodic sync (DX-100539).
+  - Default raw Reflections stay in sync with their anchor dataset's schema as columns are added or removed (DX-51258).
+  fixes:
+  - Removed the 128 KB limit on combined variable-width GROUP BY keys (DX-123407).
+  - DESCRIBE now shows full nested types for complex columns (DX-71713).
+  - Fixed Iceberg time-travel AT queries when the timestamp came from a SQL function (DX-82919).
+  - Regular-expression functions now honor a timeout (DX-107353).
+note: >-
+  Recent window only, captured 2026-09-06. The live changelog is the source of truth. No API
+  breaking changes appear in this window; the entries are engine, agent and source-connector work.

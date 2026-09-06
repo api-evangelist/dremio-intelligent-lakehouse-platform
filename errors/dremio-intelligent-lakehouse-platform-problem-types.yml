@@ -1,0 +1,88 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/api/
+format: json
+format_note: >-
+  NOT RFC 9457. Dremio does not serve application/problem+json and publishes no `type` URIs, no
+  error-code registry and no central error reference. What it publishes is a "Response Status
+  Codes" block on each API reference page, so the catalog below is assembled per status code from
+  those blocks rather than from a single registry.
+derivation_note: >-
+  The OpenAPI files in this repo declare only success responses (200/201/204) and no
+  components.schemas, so nothing could be derived from the spec — these entries were read from
+  Dremio's own documentation on 2026-09-06.
+envelope:
+  documented: false
+  note: >-
+    Dremio does not publish the shape of its error body. An agent cannot be told, ahead of time,
+    which field carries the message. This is the sharpest gap in the contract.
+problems:
+- status: 400
+  title: Bad Request
+  meaning: >-
+    Malformed request body, invalid parameter, or a rejected SQL statement. On the SQL API this
+    is where a syntax or planning error surfaces.
+  remediation: Fix the request; do not retry unchanged.
+  retryable: false
+  documented_on:
+  - https://docs.dremio.com/dremio-cloud/api/sql
+  - https://docs.dremio.com/dremio-cloud/api/job/
+  - https://docs.dremio.com/dremio-cloud/api/personal-access-token
+  - https://docs.dremio.com/dremio-cloud/api/oauth-token
+- status: 401
+  title: Unauthorized
+  meaning: >-
+    Missing, malformed or expired bearer token. OAuth access tokens expire after one hour, so a
+    long-running agent will meet this on schedule rather than exceptionally.
+  remediation: >-
+    Re-mint the access token (refresh_token when offline_access was granted, or a fresh
+    client-credentials exchange) and retry once.
+  retryable: true
+  documented_on:
+  - https://docs.dremio.com/dremio-cloud/api/catalog/
+  - https://docs.dremio.com/dremio-cloud/api/sql
+  - https://docs.dremio.com/dremio-cloud/api/personal-access-token
+  - https://docs.dremio.com/dremio-cloud/api/oauth-token
+- status: 403
+  title: Forbidden
+  meaning: >-
+    Authenticated but not authorized. Dremio's OAuth scope is always dremio.all, so a 403 is an
+    RBAC decision on the user or service user — a missing grant, a role, or a row-access /
+    column-masking policy — not a token-scope problem.
+  remediation: Grant the principal the privilege in Dremio; retrying with a new token will not help.
+  retryable: false
+  documented_on:
+  - https://docs.dremio.com/dremio-cloud/api/catalog/
+  - https://docs.dremio.com/dremio-cloud/api/job/
+  - https://docs.dremio.com/dremio-cloud/api/personal-access-token
+  - https://docs.dremio.com/dremio-cloud/api/oauth-token
+- status: 404
+  title: Not Found
+  meaning: Unknown project, catalog entity, job or token id, or a path that does not resolve.
+  remediation: Re-resolve the identifier; a catalog path may have been renamed or the entity deleted.
+  retryable: false
+  documented_on:
+  - https://docs.dremio.com/dremio-cloud/api/catalog/
+  - https://docs.dremio.com/dremio-cloud/api/job/
+  - https://docs.dremio.com/dremio-cloud/api/sql
+  - https://docs.dremio.com/dremio-cloud/api/personal-access-token
+- status: 500
+  title: Internal Server Error
+  meaning: Server-side failure. Documented on the SQL API.
+  remediation: >-
+    Safe to retry a POST with the same requestId idempotency key — the key is what makes the
+    retry safe rather than duplicative.
+  retryable: true
+  documented_on:
+  - https://docs.dremio.com/dremio-cloud/api/sql
+gaps:
+- No documented status code for rate-limit exhaustion, despite published numeric limits.
+- No Retry-After or RateLimit-* response headers.
+- No error body schema, no error codes, no error-type URIs.
+- No central error reference page — status codes are scattered per endpoint.
+job_level_errors:
+  note: >-
+    A submitted SQL job can fail after a 200. The failure is carried on the job object's state,
+    not in an HTTP status, so an agent has to poll getJob and read the job state rather than
+    treating a 200 on submitJob as success.
+  system_table: sys.project.history.jobs

@@ -1,0 +1,24 @@
+generated: '2026-09-06'
+method: generated
+source: >-
+  Generated from this repository's OpenAPI operations plus the conventions/, errors/,
+  rate-limits/ and authentication/ artifacts. Every operationId referenced was verified
+  present in the spec it names. Dremio publishes no AGENTS.md or skill files of its own —
+  checked docs.dremio.com and the dremio GitHub organisation on 2026-09-06.
+skills:
+- file: dremio-intelligent-lakehouse-platform-run-sql-query.md
+  name: Run a SQL query on Dremio and read the results
+  api: openapi/dremio-intelligent-lakehouse-platform-jobs-api-openapi.yml
+  operations: [submitJob, getJob, getJobResults, cancelJob]
+- file: dremio-intelligent-lakehouse-platform-explore-catalog.md
+  name: Explore the Dremio catalog and describe a dataset
+  api: openapi/dremio-intelligent-lakehouse-platform-catalog-api-openapi.yml
+  operations: [listCatalog, getCatalogEntity, getCatalogByPath, deleteCatalogEntity]
+- file: dremio-intelligent-lakehouse-platform-manage-reflections.md
+  name: Manage Dremio Reflections safely
+  api: openapi/dremio-intelligent-lakehouse-platform-reflections-api-openapi.yml
+  operations: [listReflections, createReflection, getReflection, updateReflection, deleteReflection]
+- file: dremio-intelligent-lakehouse-platform-authenticate.md
+  name: Authenticate an agent to Dremio
+  api: openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+  operations: [login, listUserTokens, createUserToken]

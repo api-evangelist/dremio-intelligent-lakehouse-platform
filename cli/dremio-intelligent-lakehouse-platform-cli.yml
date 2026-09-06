@@ -1,0 +1,104 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/ai-integration/cli/
+name: Dremio Developer CLI
+binary: dremio
+package: dremio-cli
+repository: https://github.com/dremio/cli
+description: >-
+  A first-party command-line interface that wraps the Dremio REST API into commands for queries,
+  catalog management, Reflections, engines, users, roles, grants and projects. Dremio documents it
+  as an AI-integration surface alongside the MCP server, not just a human tool — it outputs JSON
+  by default and ships a `chat` command that drives Dremio's own AI agent from a terminal or a
+  pipeline.
+requirements:
+  python: '>=3.11'
+install:
+- method: pipx
+  command: pipx install dremio-cli
+  recommended: true
+- method: uv
+  command: uv tool install dremio-cli
+- method: pip
+  command: pip install dremio-cli
+  note: >-
+    The docs warn that pip into a system Python may fail with externally-managed-environment on
+    modern macOS/Linux, and recommend pipx or uv instead.
+authentication:
+  method: personal-access-token
+  required:
+  - PAT
+  - project id
+  precedence: CLI flags > environment variables > config file
+  config_file: ~/.config/dremioai/config.yaml
+  config_shared_with: the Dremio MCP Server (same file, no duplicate setup)
+  environment:
+  - DREMIO_TOKEN
+  - DREMIO_PROJECT_ID
+  - DREMIO_URI
+  setup_command: dremio setup
+  endpoints:
+  - control_plane: US
+    uri: https://api.dremio.cloud
+  - control_plane: EU
+    uri: https://api.eu.dremio.cloud
+commands:
+- group: setup
+  commands:
+  - dremio setup
+  description: Interactive credential setup — region, PAT, project id discovery, validation, config write.
+- group: query
+  commands:
+  - dremio query run "<sql>"
+  - dremio query run --file query.sql
+  - cat query.sql | dremio query run -
+  description: Run SQL from an argument, a file, or stdin.
+- group: search
+  commands:
+  - dremio search "<term>"
+  description: Search the catalog.
+- group: schema
+  commands:
+  - dremio schema describe <path>
+  - dremio schema lineage <path>
+  description: Describe a dataset's fields and trace its lineage.
+- group: job
+  commands:
+  - dremio job list
+  description: List and filter jobs (for example --status FAILED).
+- group: reflection
+  commands:
+  - dremio reflection list <path>
+  - dremio reflection refresh <reflection-id>
+  description: List Reflections on a dataset and trigger a refresh.
+- group: chat
+  commands:
+  - dremio chat
+  - dremio chat --message "<prompt>"
+  - dremio chat list
+  - dremio chat history <id>
+  - dremio chat delete <id>
+  description: >-
+    Converse with Dremio's AI agent. Interactive mode carries slash commands (/new, /list,
+    /continue, /history, /cancel, /delete, /info, /help, /quit); non-interactive mode streams a
+    single message to stdout for scripting. --auto-approve approves the agent's tool calls,
+    --conversation resumes a session, --model overrides the model, --log-file writes JSON-lines
+    events.
+global_flags:
+- flag: --output
+  values: [json, csv, pretty]
+  default: json
+  note: JSON by default, which is the agent- and pipeline-facing choice.
+- flag: --fields
+  note: Dot-notation projection, e.g. --fields fields.name,fields.type
+- flag: --dry-run
+  note: >-
+    Validates a destructive command before executing it. The docs demonstrate it on
+    `dremio reflection refresh`. This is a real dry-run mode, documented as such.
+- flag: --token
+- flag: --project-id
+- flag: --uri
+agent_notes: >-
+  The docs publish a worked "autonomous data investigation" sequence (search → schema describe →
+  schema lineage → query run → job list → reflection list → reflection refresh --dry-run →
+  reflection refresh) as the intended agent flow.

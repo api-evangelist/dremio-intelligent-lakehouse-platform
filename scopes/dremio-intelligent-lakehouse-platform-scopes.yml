@@ -1,0 +1,65 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/api/oauth-token
+docs: https://docs.dremio.com/dremio-cloud/api/oauth-token
+discovery:
+- url: https://mcp.dremio.cloud/.well-known/oauth-authorization-server
+  status: 200
+  file: well-known/dremio-intelligent-lakehouse-platform-mcp-oauth-authorization-server.json
+- url: https://login.dremio.cloud/.well-known/oauth-authorization-server
+  status: 200
+  file: well-known/dremio-intelligent-lakehouse-platform-login-oauth-authorization-server.json
+note: >-
+  No OpenAPI in this repo declares an oauth2 securityScheme, so derive-oauth-scopes.py found
+  nothing (0 providers with oauth2). These scopes are real all the same: they are published in
+  Dremio's OAuth Token documentation and advertised in the live RFC 8414 discovery document the
+  hosted MCP server serves. The scope surface is deliberately coarse.
+schemes:
+- name: DremioOAuth
+  type: oauth2
+  issuer: https://login.dremio.cloud
+  source: https://mcp.dremio.cloud/.well-known/oauth-authorization-server
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    note: For service users, using client_id + client_secret. Token lifetime one hour.
+  - flow: authorizationCode
+    authorizationUrl: https://login.dremio.cloud/oauth/authorize
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    pkce: S256
+    note: Used by MCP clients; dynamic client registration at https://login.dremio.cloud/oauth/register.
+  - flow: tokenExchange
+    tokenUrl: https://login.dremio.cloud/oauth/token
+    grant_type: urn:ietf:params:oauth:grant-type:token-exchange
+    note: >-
+      Exchange an external OIDC JWT (subject_token_type urn:ietf:params:oauth:token-type:jwt)
+      or a personal access token for a Dremio access token.
+scopes:
+- scope: dremio.all
+  description: >-
+    Full access to Dremio resources. Dremio's documentation states the scope "must be set to
+    dremio.all" for the client-credentials flow and that a token exchange returns dremio.all.
+  flows: [clientCredentials, authorizationCode, tokenExchange]
+  sources:
+  - https://docs.dremio.com/dremio-cloud/api/oauth-token
+  - https://mcp.dremio.cloud/.well-known/oauth-authorization-server
+- scope: offline_access
+  description: Issues a refresh_token alongside the access token so a client can renew without re-consent.
+  flows: [clientCredentials, authorizationCode]
+  sources:
+  - https://mcp.dremio.cloud/.well-known/oauth-authorization-server
+  - https://docs.dremio.com/dremio-cloud/api/oauth-token
+granularity:
+  level: coarse
+  assessment: >-
+    There is exactly one access scope and it is all-or-nothing. An agent cannot be issued a
+    read-only Dremio token through OAuth; least privilege has to be expressed through Dremio's
+    own RBAC (roles, grants, row-access and column-masking policies) on the user or service user
+    the token represents, not through the token's scope. For an agent deployment that is the
+    load-bearing fact: scope the service user, because the scope string will not scope anything.
+  rbac_docs:
+  - https://docs.dremio.com/dremio-cloud/manage-govern/row-column-policies
+  - https://docs.dremio.com/dremio-cloud/admin/users
+token_lifetimes:
+  access_token: 3600 seconds (documented default; expires_in returned as 3599)
+  refresh_token: issued with offline_access

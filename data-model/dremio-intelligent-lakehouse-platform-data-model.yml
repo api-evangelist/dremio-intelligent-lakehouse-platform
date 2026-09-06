@@ -1,0 +1,116 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/*.yml + https://docs.dremio.com/dremio-cloud/api/
+note: >-
+  Derived from the operation surface and the documented URL shapes, NOT from components.schemas —
+  the OpenAPI files in this repo declare no schemas, so no $ref graph exists to walk. Every
+  relationship below is grounded in a real path segment or a documented parent-child rule, and
+  cardinalities are read from the published quota table.
+identifiers:
+  scheme: uuid
+  format: 36-character canonical UUID
+  prefixes: none
+  version_tag:
+    field: tag
+    type: uuid
+    note: Returned on read, required on update; optimistic concurrency control.
+entities:
+- name: Organization
+  description: The top-level Dremio Cloud tenant.
+  operations: []
+- name: Project
+  description: >-
+    The unit every other resource hangs off. Cloud paths are /v0/projects/{project_id}/...,
+    so project is the required context for catalog, source, job, reflection and script work.
+  quota_per_organization: 200
+- name: CatalogEntity
+  description: A source, space, folder, table, view, file, function, wiki or tag in the catalog.
+  operations: [listCatalog, getCatalogEntity, getCatalogByPath, deleteCatalogEntity]
+  addressing:
+  - by id
+  - by path
+- name: Source
+  description: A connected data source — object storage, database, or an Iceberg REST catalog.
+  operations: [listSources]
+  quota_per_project: 100
+- name: Job
+  description: An asynchronous SQL execution. Submitting returns a job id; results are fetched separately.
+  operations: [submitJob, getJob, getJobResults, cancelJob]
+- name: Reflection
+  description: A materialization used to accelerate queries over an anchor dataset.
+  operations: [listReflections, createReflection, getReflection, updateReflection, deleteReflection]
+  quota_per_project: 500
+  autonomous_quota: 100
+- name: Script
+  description: A saved SQL script.
+  operations: [listScripts, createScript]
+  quota_per_user: 1000
+- name: Role
+  description: A named permission grouping.
+  operations: [listRoles]
+  quota_per_organization: 5000
+  max_nesting: 10
+- name: User
+  description: A human user, an SSO user, or a service user for machine-to-machine access.
+  quota_per_organization: 15000
+- name: PersonalAccessToken
+  description: A long-lived bearer credential minted for a user.
+  operations: [listUserTokens, createUserToken]
+  owner: User
+relationships:
+- from: Organization
+  to: Project
+  type: has_many
+  via: project_id
+- from: Project
+  to: CatalogEntity
+  type: has_many
+  via: path /v0/projects/{project_id}/catalog
+- from: Project
+  to: Source
+  type: has_many
+  via: path
+- from: Project
+  to: Job
+  type: has_many
+  via: path /v0/projects/{project_id}/job
+- from: Project
+  to: Reflection
+  type: has_many
+  via: path
+- from: CatalogEntity
+  to: CatalogEntity
+  type: has_many
+  via: parent folder
+  note: Folders nest up to 8 levels deep.
+- from: Reflection
+  to: CatalogEntity
+  type: belongs_to
+  via: anchor dataset id
+- from: Job
+  to: JobResults
+  type: has_one
+  via: /job/{id}/results
+- from: User
+  to: PersonalAccessToken
+  type: has_many
+  via: /users/{userId}/tokens
+- from: Role
+  to: Role
+  type: has_many
+  via: nested role membership
+- from: User
+  to: Role
+  type: has_many
+  via: role membership
+- from: CatalogEntity
+  to: CatalogEntity
+  type: has_many
+  via: lineage (parent and child datasets)
+  note: Traced through the lineage API and `dremio schema lineage` in the CLI.
+storage_layer:
+  format: Apache Iceberg
+  catalog: Open Catalog (Apache Polaris), exposed over the Iceberg REST Catalog specification
+  versioning: >-
+    Table state is a chain of Iceberg snapshots. Time travel reads a snapshot; ROLLBACK TABLE
+    restores one. This is the real version graph underneath the entity model above.

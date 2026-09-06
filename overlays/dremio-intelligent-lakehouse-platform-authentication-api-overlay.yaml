@@ -1,0 +1,48 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Dremio Intelligent Lakehouse REST Authentication API
+  version: 1.0.0
+extends: openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+x-generated: '2026-09-06'
+x-method: generated
+x-source: >-
+  Enhancements derived from artifacts in this repository — conventions/, rate-limits/,
+  authentication/, errors/, lifecycle/ and conformance/ — all of which were read from Dremio's
+  own documentation on 2026-09-06. This overlay never mutates the OpenAPI it extends.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/dremio-intelligent-lakehouse-platform
+    x-api-base-cloud: https://api.dremio.cloud/v0/
+    x-api-base-self-managed: https://{hostname}/api/v3
+    x-docs: https://docs.dremio.com/dremio-cloud/api/
+    x-changelog: https://docs.dremio.com/dremio-cloud/changelog
+    x-status-page: https://status.dremio.com/
+- target: $.info
+  update:
+    x-idempotency:
+      parameter: requestId
+      location: body
+      methods: [POST]
+      retention: 24h
+      coverage: full
+      docs: https://docs.dremio.com/dremio-cloud/api/
+- target: $.info
+  update:
+    x-rate-limits:
+      scope: ip-address
+      api_calls_per_minute: 1200
+      response_headers: none
+      docs: https://docs.dremio.com/dremio-cloud/help-support/limits
+- target: $.info
+  update:
+    x-reversibility:
+      table_writes: ROLLBACK TABLE ... TO SNAPSHOT|TIMESTAMP
+      window: snapshot retention; VACUUM TABLE EXPIRE SNAPSHOTS defaults to older_than 5 days
+      docs: https://docs.dremio.com/dremio-cloud/sql/commands/rollback-table
+- target: $.components.securitySchemes.bearerAuth
+  update:
+    x-token-types: [personal-access-token, oauth2-access-token]
+    x-oauth-authorization-server: https://login.dremio.cloud
+    x-oauth-scopes: [dremio.all, offline_access]
+    x-oauth-metadata: https://login.dremio.cloud/.well-known/oauth-authorization-server

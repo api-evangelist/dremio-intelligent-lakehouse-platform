@@ -3,145 +3,90 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Dremio | Intelligent Lakehouse Platform
 providerId: dremio-intelligent-lakehouse-platform
+generated: '2026-09-06'
+method: searched
+source: https://www.dremio.com/pricing/
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
 tags:
   - Data
   - Analytics
   - Lakehouse
-  - Apache Iceberg
-  - SQL
-  - AI
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+  - Pricing
+description: >-
+  Dremio's published pricing, read from dremio.com/pricing on 2026-09-06. This replaces the
+  2026-05-04 scaffold, which invented a Free/Pro/Enterprise ladder with request quotas Dremio has
+  never published. Dremio does not meter API requests at all — the unit of charge is compute.
+pricing_model: consumption
+billing_unit: DCU (Dremio Compute Unit)
+api_metered: false
+api_metered_note: >-
+  There is no per-API-call price and no request quota in any tier. API access is included with
+  the platform; what is billed is the compute the query behind the call consumes.
+plan_count: 3
 plans:
-  - id: dremio-intelligent-lakehouse-platform-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Dremio | Intelligent Lakehouse Platform API surface. Intended
-      for evaluation, prototyping, and low-volume integrations. Real limits and pricing must be reconciled
-      with the provider's published plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Dremio | Intelligent Lakehouse Platform
-  - id: dremio-intelligent-lakehouse-platform-pro
-    name: Professional
-    type: paid
-    description: Production tier for Dremio | Intelligent Lakehouse Platform. Provides higher quotas,
-      priority support, and access to the broader API portfolio. Pricing placeholder; align with the provider's
-      pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Dremio | Intelligent Lakehouse Platform
-  - id: dremio-intelligent-lakehouse-platform-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Dremio | Intelligent Lakehouse Platform. Includes dedicated
-      capacity, contractual SLAs, security review, data residency options, and named technical account
-      management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Dremio | Intelligent Lakehouse Platform
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+  - id: dremio-cloud
+    name: Dremio Cloud
+    type: consumption
+    price: '0.20'
+    currency: USD
+    unit: DCU
+    billing_period: consumption
+    description: >-
+      Fully managed agentic lakehouse on AWS (Azure listed as coming soon). Zero infrastructure,
+      automatic scaling, automatic feature releases and optimization.
+    includes:
+      - AI Agent
+      - AI Semantic Layer
+      - Intelligent Query Engine
+      - Open Catalog
+    trial:
+      offered: true
+      credit: '400'
+      currency: USD
+      duration_days: 30
+    infrastructure: Dremio-managed
+    upgrades: automatic
+    scalability: automatic
+  - id: dremio-enterprise
+    name: Dremio Enterprise
+    type: consumption
+    price: null
+    currency: USD
+    billing_period: consumption
+    description: >-
+      Self-managed deployment on Kubernetes on-premises or in the cloud (AWS, Azure, GCP), or
+      Dremio-as-a-Service. Full control over infrastructure, security and compliance.
+    includes:
+      - AI Agent
+      - AI Semantic Layer
+      - Intelligent Query Engine
+      - Open Catalog
+    price_note: >-
+      Consumption-based, but no rate card is published — the pricing page says "Contact our sales
+      team for pricing information." This tier is a sales gate.
+    trial:
+      offered: false
+      note: Talk to Sales
+    infrastructure: self-managed
+    upgrades: manual
+    scalability: manual
+  - id: dremio-community-edition
+    name: Dremio Community Edition
+    type: free
+    price: '0.00'
+    currency: USD
+    description: >-
+      Free query engine for local machines or servers, listed in Dremio's product navigation.
+      This is the surface a developer can stand up without a sales conversation, and it exposes
+      the same self-managed REST v3 API this repo describes.
+    price_note: >-
+      No price or entitlement table is published on the pricing page for this edition; it is
+      listed under Products rather than priced as a tier.
+published_figures:
+  companies: '2,000+'
+  users: '150,000+'
+  uptime_claim: 99.99%
+  uptime_claim_note: >-
+    A marketing figure on the pricing page. No SLA document, credit schedule or measurement
+    method is published to back it — see lifecycle/.

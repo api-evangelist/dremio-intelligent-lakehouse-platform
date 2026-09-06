@@ -1,0 +1,177 @@
+generated: '2026-09-06'
+method: probed
+source: live GET of the named /.well-known/ path list on every host this record knows
+note: >-
+  Probed the registrable domain (dremio.com + www), the docs host, the Dremio Cloud API host
+  (api.dremio.cloud), the hosted MCP host (mcp.dremio.cloud) and the authorization server host
+  named in the MCP protected-resource document (login.dremio.cloud). Real documents were served
+  on three of the six hosts. Every host carried a negative-control probe at a path that cannot
+  exist; all six returned a non-2xx, so no path-echoing host is in this set.
+path_echo_control: passed
+hit_count: 4
+hosts:
+- host: https://www.dremio.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: dremio-intelligent-lakehouse-platform-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 404
+- host: https://dremio.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: same document as www.dremio.com; saved once
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 301
+    note: apex redirects every other path to www
+- host: https://mcp.dremio.cloud
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: dremio-intelligent-lakehouse-platform-mcp-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: dremio-intelligent-lakehouse-platform-mcp-oauth-protected-resource.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 404
+- host: https://login.dremio.cloud
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: dremio-intelligent-lakehouse-platform-login-oauth-authorization-server.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 502
+  - path: /apis.yml
+    status: 200
+    note: >-
+      NOT a document. The console SPA answers 200 with an HTML shell here; the body is
+      <!doctype html>, not an APIs.json/YAML index. Recorded as a miss.
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 404
+- host: https://api.dremio.cloud
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 404
+- host: https://docs.dremio.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dremio-negative-control-7f3ab91c.json
+    status: 404
+a2a:
+  agent_card: not-served
+  note: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json returned 404 on all six
+    hosts. No a2a/ artifact was written — an agent card is search-only and is never authored on a
+    provider's behalf.

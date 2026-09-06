@@ -1,0 +1,182 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  Dremio documentation and live discovery documents fetched 2026-09-06; standards asserted only
+  where the contract or a served document says so.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    https://login.dremio.cloud/oauth/token — documented grant types client_credentials,
+    authorization_code, refresh_token and token-exchange; bearer access tokens with expires_in.
+  source: https://docs.dremio.com/dremio-cloud/api/oauth-token
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: >-
+    HTTP 200 at https://mcp.dremio.cloud/.well-known/oauth-authorization-server and
+    https://login.dremio.cloud/.well-known/oauth-authorization-server, both returning issuer,
+    authorization_endpoint, token_endpoint and registration_endpoint.
+  file: well-known/dremio-intelligent-lakehouse-platform-mcp-oauth-authorization-server.json
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    HTTP 200 at https://mcp.dremio.cloud/.well-known/oauth-protected-resource returning
+    resource + authorization_servers, and the 401 on the MCP endpoint carries a matching
+    WWW-Authenticate Bearer resource_metadata challenge.
+  file: well-known/dremio-intelligent-lakehouse-platform-mcp-oauth-protected-resource.json
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://login.dremio.cloud/oauth/register advertised in both discovery documents.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: ["S256"] in both authorization-server metadata documents.'
+- id: rfc8693-oauth-token-exchange
+  conforms: true
+  evidence: >-
+    grant_type urn:ietf:params:oauth:grant-type:token-exchange with subject_token_type
+    urn:ietf:params:oauth:token-type:jwt for exchanging an external OIDC JWT; responses carry
+    issued_token_type urn:ietf:params:oauth:token-type:access_token.
+  source: https://docs.dremio.com/dremio-cloud/api/oauth-token
+- id: oidc
+  conforms: partial
+  evidence: >-
+    Dremio consumes OIDC — external token providers, Microsoft Entra ID, Okta, LDAP as identity
+    providers — but serves no /.well-known/openid-configuration on any host probed (404 on
+    www.dremio.com, login.dremio.cloud, api.dremio.cloud, mcp.dremio.cloud, docs.dremio.com).
+    It is a relying party, not an OP.
+  source: https://docs.dremio.com/current/security/authentication/identity-providers/oidc
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    HTTP 200 at https://www.dremio.com/.well-known/security.txt with Contact, Policy and Hiring
+    fields.
+  file: well-known/dremio-intelligent-lakehouse-platform-security.txt
+- id: mcp
+  conforms: true
+  evidence: >-
+    Dremio-hosted remote MCP server at https://mcp.dremio.cloud/mcp/{project_id} (US) and
+    mcp.eu.dremio.cloud (EU), plus an open-source self-hosted server. Live tools/list is
+    OAuth-gated (401 with an RFC 9728 challenge).
+  source: https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+- id: iso8601
+  conforms: true
+  evidence: 'API timestamps documented as YYYY-MM-DDTHH:mm:ss.sssZ in UTC.'
+  source: https://docs.dremio.com/dremio-cloud/api/
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json media type appears in the documentation or in any spec in this
+    repo; errors are plain JSON with per-endpoint status codes.
+- id: json-api
+  conforms: false
+- id: odata
+  conforms: false
+- id: fhir
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false
+- id: cursor-pagination
+  conforms: partial
+  evidence: >-
+    pageToken/nextPageToken cursors on catalog-shaped endpoints, limit/offset on job results —
+    the API does not use one pagination convention throughout.
+  source: https://docs.dremio.com/dremio-cloud/api/
+- id: idempotency
+  conforms: true
+  evidence: >-
+    requestId UUID body parameter on POST operations, 24-hour key retention, replayed requests
+    return the original response.
+  source: https://docs.dremio.com/dremio-cloud/api/
+domain_standards:
+- id: apache-iceberg-rest-catalog
+  conforms: true
+  market: data lakehouse / table format
+  evidence: >-
+    Dremio SERVES the Apache Iceberg REST Catalog specification as a first-class base URL —
+    https://catalog.dremio.cloud/api/iceberg/v1/, documented as "Iceberg Catalog REST" alongside
+    the Dremio API and Login base URLs, with /namespaces given as the worked example. Probed
+    2026-09-06: GET https://catalog.dremio.cloud/api/iceberg/v1/config returns HTTP 401 (live,
+    auth-gated) while a sibling non-Iceberg path on the same host returns 404, so the Iceberg
+    route is really mounted. Dremio also CONSUMES the same specification as a client, connecting
+    to any Iceberg-REST-compatible catalog (Apache Polaris, AWS Glue, S3 Tables, Confluent
+    Tableflow, Microsoft OneLake, Project Nessie).
+  source:
+  - https://docs.dremio.com/dremio-cloud/api/
+  - https://docs.dremio.com/dremio-cloud/bring-data/connect/catalogs/iceberg-rest-catalog
+  spec: https://iceberg.apache.org/rest-catalog-spec/
+  significance: >-
+    This is the domain standard for the lakehouse market and it is the one that decides whether a
+    buyer needs a bespoke connector. Dremio speaking Iceberg REST on both sides means an existing
+    Iceberg client can point at Dremio's Open Catalog, and Dremio can read another vendor's
+    catalog, without either side writing an adapter.
+- id: scim-2.0
+  conforms: true
+  market: enterprise identity provisioning
+  evidence: >-
+    Dremio exposes SCIM 2.0 endpoints at http://{hostname}:9047/scim/v2 and
+    https://{hostname}/scim/v2, documented with "Version: SCIM 2.0" and header authentication,
+    for user and group provisioning from Okta, Microsoft Entra ID and other IdPs. Dremio Cloud's
+    published rate-limit table independently confirms the surface is live in the managed service:
+    it lists "SCIM reads per minute - user 180" and "SCIM writes per minute - user 300".
+  source:
+  - https://docs.dremio.com/current/security/authentication/identity-providers/scim
+  - https://docs.dremio.com/dremio-cloud/help-support/limits
+  spec: https://datatracker.ietf.org/doc/html/rfc7644
+- id: arrow-flight-sql
+  conforms: true
+  market: analytical data transport
+  evidence: >-
+    Arrow Flight and Arrow Flight SQL are a documented first-class data path
+    (grpc+tls://data.dremio.cloud:443), with Dremio distributing Arrow Flight SQL JDBC 19.0.0 and
+    ODBC 0.9.7 drivers and a documented ADBC path.
+  source: https://docs.dremio.com/dremio-cloud/developer/arrow-flight-sql
+  spec: https://arrow.apache.org/docs/format/FlightSql.html
+- id: apache-polaris
+  conforms: true
+  market: lakehouse catalog governance
+  evidence: >-
+    Dremio's Open Catalog is documented as built on Apache Polaris (incubating), with Iceberg
+    REST compatibility and RBAC.
+  source: https://docs.dremio.com/current/data-sources/open-catalog/
+compliance:
+  published: true
+  page: https://www.dremio.com/platform/security/
+  trust_center: https://trust.dremio.com/
+  certifications:
+  - name: SOC 2 Type 2
+    status: maintained
+    availability: report available upon request via account/sales representative
+  - name: ISO/IEC 27001:2022
+    status: certified
+    availability: certificate available upon request via account/sales representative
+  - name: HIPAA
+    status: HIPAA-ready
+    note: >-
+      Dremio's own wording is "HIPAA-ready" — enabling covered entities and business associates
+      to analyze PHI — not a certification claim.
+  note: >-
+    Named on Dremio's public security page. Neither the SOC 2 report nor the ISO 27001
+    certificate is downloadable without contacting sales, so the evidence is a claim on a public
+    page plus a trust center, not a retrievable artifact.
+not_applicable:
+- id: asyncapi
+  reason: >-
+    Dremio publishes no webhook, event or streaming callback surface. The docs sitemap carries no
+    webhook or event-subscription page; change data is consumed by querying Iceberg snapshots and
+    system tables. Not a gap — this API has no event surface to describe, so it is out of the
+    denominator.
+- id: grpc-protobuf
+  reason: >-
+    No consumer-facing .proto is published. dremio/dremio-oss carries a `protocol` Maven module,
+    but its protobuf definitions are the engine's internal coordinator/executor RPC, not an API
+    contract offered to callers. The gRPC surface Dremio DOES offer consumers is Apache Arrow
+    Flight SQL, whose .proto belongs to Apache Arrow rather than to Dremio — so nothing was saved
+    to grpc/. Recording an internal protocol as a published contract would credit Dremio with an
+    API it does not sell.
+- id: wsdl-soap
+  reason: >-
+    No SOAP surface. Probed https://api.dremio.cloud/?wsdl and /v0?wsdl (404) and
+    https://www.dremio.com/?wsdl (403 bot challenge, no WSDL); the docs carry no SOAP or
+    enterprise-integration section.

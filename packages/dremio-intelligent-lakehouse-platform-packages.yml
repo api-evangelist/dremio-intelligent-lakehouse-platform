@@ -1,0 +1,124 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  PyPI JSON API (pypi.org/pypi/<pkg>/json), the Dremio docs driver + CLI pages, and the
+  dremio GitHub organisation
+note: >-
+  Dremio ships no npm, Maven Central, NuGet, Go, RubyGems, Packagist or crates.io package.
+  Maven Central was queried for g:com.dremio, g:com.dremio.distribution and a:dremio-jdbc-driver
+  and returned numFound 0 for all three — the JDBC/ODBC drivers are distributed as signed
+  downloads from dremio.com, not through a package registry. Language access to Dremio is
+  Python (CLI + Arrow Flight) and JDBC/ODBC.
+packages:
+- language: python
+  registry: pypi
+  name: dremio-cli
+  url: https://pypi.org/project/dremio-cli/
+  install: pipx install dremio-cli
+  official: true
+  version: 2.1.2
+  published: '2026-04-15'
+  repository: https://github.com/dremio/cli
+  docs: https://docs.dremio.com/dremio-cloud/ai-integration/cli/
+  note: >-
+    The Dremio Developer CLI. First-party — the docs name the package explicitly and warn against
+    the unrelated third-party `dremio-client`. Requires Python 3.11+. Also importable as a Python
+    library for agent code.
+- language: python
+  registry: github
+  name: dremio-mcp
+  url: https://github.com/dremio/dremio-mcp
+  install: git clone https://github.com/dremio/dremio-mcp.git && uv sync
+  official: true
+  version: null
+  published: null
+  note: >-
+    The self-hosted Dremio MCP Server. First-party (dremio GitHub organisation) and the docs
+    install it by git clone plus `uv sync`. Checked 2026-09-06: it is NOT published to PyPI
+    (pypi.org/pypi/dremio-mcp/json returns 404) or npm, so no registry metadata endpoint exists
+    to read a version or a release date from — an honest gap, not a guess. A consumer cannot pin
+    a version either; they get whatever the default branch holds.
+- language: python
+  registry: pypi
+  name: dremio-simple-query
+  url: https://pypi.org/project/dremio-simple-query/
+  install: pip install dremio-simple-query
+  official: false
+  version: 2.0.0
+  published: '2026-02-01'
+  repository: https://github.com/developer-advocacy-dremio/dremio_simple_query
+  note: >-
+    Arrow Flight query helper published by Dremio's developer-advocacy organisation rather than
+    the main dremio org. Dremio's own MCP documentation instructs readers to install it to mint a
+    PAT, so it is provider-endorsed, but it is not shipped from the product repository — recorded
+    official:false on that distinction.
+- language: java
+  registry: cdn
+  name: Arrow Flight SQL JDBC driver
+  url: https://www.dremio.com/drivers/jdbc/
+  install: add the downloaded .jar to the classpath (driver class org.apache.arrow.driver.jdbc.ArrowFlightJdbcDriver)
+  official: false
+  version: 19.0.0
+  published: null
+  license: Apache-2.0
+  docs: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/arrow-flight-sql-jdbc
+  note: >-
+    The recommended JDBC driver for Dremio. Authored by Apache Arrow (hence official:false on
+    authorship) and redistributed and supported by Dremio from its own download page. Version
+    19.0.0 is stated in the Dremio docs; the download URL is unpinned and floats to current, and
+    the artifact is not on Maven Central, so there is no dated registry record to read a release
+    date from.
+- language: java
+  registry: cdn
+  name: Dremio JDBC driver (Legacy)
+  url: https://www.dremio.com/drivers/jdbc/
+  install: add the downloaded .jar to the classpath
+  official: true
+  version: '25+'
+  published: null
+  license: Apache-2.0
+  status: maintenance
+  docs: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/jdbc-legacy
+  note: >-
+    First-party Dremio driver, explicitly in maintenance — the docs state it "will be not
+    enhanced or fixed going forward" and point new work at the Arrow Flight SQL JDBC driver.
+    Version is published as a floor ("version 25+"), not a pinned release, and the download is
+    unpinned.
+- language: c++
+  registry: cdn
+  name: Arrow Flight SQL ODBC driver
+  url: https://www.dremio.com/drivers/odbc/
+  install: run the platform installer from the Dremio ODBC download page
+  official: false
+  version: 0.9.7
+  published: null
+  license: LGPL-2.0
+  docs: https://docs.dremio.com/dremio-cloud/explore-analyze/client-apps/drivers/arrow-flight-sql-odbc
+  note: >-
+    Apache Arrow ODBC driver redistributed by Dremio. Version 0.9.7 per the Dremio docs; the
+    download page is unpinned, so no release date is recoverable.
+registries_checked:
+  npm:
+    queried:
+    - '@dremio/dremio-mcp'
+    - dremio
+    - '@dremio/sdk'
+    result: none found (404)
+  pypi:
+    found:
+    - dremio-cli
+    - dremio-simple-query
+    absent:
+    - dremio-mcp
+    - dremio
+  maven_central:
+    queried:
+    - g:com.dremio
+    - g:com.dremio.distribution
+    - a:dremio-jdbc-driver
+    result: numFound 0
+  nuget: not published
+  go_modules: not published
+  rubygems: not published
+  packagist: not published
+  crates_io: not published

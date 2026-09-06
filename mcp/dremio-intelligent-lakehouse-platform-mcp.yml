@@ -1,0 +1,92 @@
+generated: '2026-09-06'
+method: searched
+status: published
+source: https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+docs:
+- https://docs.dremio.com/dremio-cloud/ai-integration/
+- https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+- https://docs.dremio.com/current/developer/mcp-server
+deployment:
+  mode: both
+  endpoint: https://mcp.dremio.cloud/mcp/{project_id}
+  install: git clone https://github.com/dremio/dremio-mcp.git && uv sync && uv run dremio-mcp-server run
+  package: https://github.com/dremio/dremio-mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    Two distinct products. The Dremio-hosted remote server is an https endpoint an MCP client
+    POSTs to today — mcp.dremio.cloud (US control plane) or mcp.eu.dremio.cloud (EU), with the
+    project id as the final path segment. The self-hosted server is an open-source Python
+    project cloned from GitHub and run under uv with a personal access token; it is not on PyPI
+    or npm as a published package, so there is no `npx`/`pipx` one-liner.
+server:
+  name: dremio
+  transport: http
+  url: https://mcp.dremio.cloud/mcp/{project_id}
+  regions:
+  - control_plane: US
+    endpoint: https://mcp.dremio.cloud/mcp/{project_id}
+  - control_plane: EU
+    endpoint: https://mcp.eu.dremio.cloud/mcp/{project_id}
+  self_hosted:
+    repository: https://github.com/dremio/dremio-mcp
+    runtime: python >= 3.11 via uv
+    auth: personal access token
+    modes:
+    - id: FOR_DATA_PATTERNS
+      description: Explore data, generate SQL from natural language, and create views in Dremio.
+    - id: FOR_SELF
+      description: System introspection and performance analysis.
+    - id: FOR_PROMETHEUS
+      description: Enrich insights with Dremio metrics from a connected Prometheus setup.
+authentication:
+  hosted:
+    scheme: oauth2
+    authorization_server: https://login.dremio.cloud
+    protected_resource: https://mcp.dremio.cloud/mcp
+    scopes:
+    - dremio.all
+    - offline_access
+    dynamic_client_registration: https://login.dremio.cloud/oauth/register
+    pkce: S256
+    discovery:
+    - https://mcp.dremio.cloud/.well-known/oauth-protected-resource
+    - https://mcp.dremio.cloud/.well-known/oauth-authorization-server
+    note: >-
+      Claude.ai and ChatGPT connect with the endpoint alone (dynamic client registration);
+      other clients need a Native OAuth application created in the Dremio console.
+  self_hosted:
+    scheme: personal-access-token
+    config_file: ~/.config/dremioai/config.yaml
+authorization_model: >-
+  Tools execute as the authenticated Dremio user — the docs state that Dremio's existing access
+  controls are enforced and agents operate with the same permissions as that user.
+live_introspection:
+  attempted: '2026-09-06'
+  endpoint: https://mcp.dremio.cloud/mcp
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  www_authenticate: Bearer resource_metadata="https://mcp.dremio.cloud/.well-known/oauth-protected-resource/mcp"
+  result: gated
+  note: >-
+    The live tool list and its inputSchema require an authenticated OAuth session. The RFC 9728
+    challenge is well-formed and the referenced resource metadata resolves (HTTP 200), so the
+    server is real and reachable; only the schema is gated.
+tools:
+- name: GetUsefulSystemTableNames
+  description: List the Dremio system tables worth querying for introspection.
+  source: https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+  input_schema: unknown-auth-gated
+- name: GetSchemaOfTable
+  description: Return the schema of a table in the Dremio catalog.
+  source: https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+  input_schema: unknown-auth-gated
+- name: RunSqlQuery
+  description: Execute a SQL query against Dremio and return results.
+  source: https://docs.dremio.com/dremio-cloud/ai-integration/mcp-server
+  input_schema: unknown-auth-gated
+tools_note: >-
+  Only the three tools the documentation names verbatim ("You should see dremio listed with
+  available tools like GetUsefulSystemTableNames, GetSchemaOfTable, and RunSqlQuery") are
+  recorded. The docs say "like", so this is a partial list, and the full set plus every
+  inputSchema needs an authenticated tools/list. Nothing here is guessed.

@@ -1,0 +1,213 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.dremio.com/dremio-cloud/api/
+docs:
+- https://docs.dremio.com/dremio-cloud/api/
+- https://docs.dremio.com/dremio-cloud/api/oauth-token
+- https://docs.dremio.com/dremio-cloud/help-support/limits
+- https://docs.dremio.com/dremio-cloud/sql/commands/rollback-table
+- https://docs.dremio.com/dremio-cloud/sql/commands/vacuum-table
+base_urls:
+- name: Dremio API
+  url: https://api.dremio.cloud/v0/
+  note: US control plane. EU control plane is https://api.eu.dremio.cloud.
+- name: Dremio Login / OAuth authorization server
+  url: https://login.dremio.cloud/
+- name: Iceberg Catalog REST
+  url: https://catalog.dremio.cloud/api/iceberg/v1/
+  note: Open Catalog exposed through the Apache Iceberg REST Catalog specification.
+- name: Arrow Flight SQL
+  url: grpc+tls://data.dremio.cloud:443
+  note: Not REST — the JDBC/ODBC/ADBC data path.
+- name: Self-managed REST v3
+  url: https://{hostname}/api/v3
+  note: Dremio Enterprise / Community; the hostname is the customer's coordinator.
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <token>'
+  token_types:
+  - personal-access-token
+  - oauth2-access-token
+  exchange: >-
+    Dremio recommends exchanging a PAT for an OAuth access token before production use.
+  see: authentication/dremio-intelligent-lakehouse-platform-authentication.yml
+idempotency:
+  supported: true
+  coverage: full
+  mechanism: request-body parameter
+  parameter: requestId
+  location: body
+  value: a client-generated UUID
+  methods:
+  - POST
+  retention: 24 hours
+  retention_note: An idempotency key can be reused after 24 hours in a new POST operation.
+  behavior: >-
+    The server uses requestId to identify retries of the same request and returns the same
+    response without repeating the operation.
+  docs: https://docs.dremio.com/dremio-cloud/api/
+  coverage_rationale: >-
+    Graded full rather than partial. The mechanism is documented against POST generally — not
+    against a named subset of operations — and Dremio's docs state that PUT, GET and DELETE are
+    naturally idempotent, so the whole mutating surface has replay protection. The caveat worth
+    knowing is the shape: this is a body parameter, not an Idempotency-Key header, so it cannot
+    be applied by an HTTP client or a proxy without touching the payload, and the docs say a
+    successful POST for entities REQUIRES it.
+concurrency:
+  mechanism: optimistic
+  field: tag
+  description: >-
+    Retrieving an entity returns a `tag` attribute holding a UUID version identifier. An update
+    must include that tag, so a concurrent modification is rejected rather than silently
+    overwriting.
+pagination:
+  styles:
+  - style: cursor
+    request_param: pageToken
+    response_fields:
+    - pageToken
+    - nextPageToken
+    response_field_note: >-
+      The continuation token comes back under different names by endpoint — pageToken for Data
+      Maintenance, nextPageToken for Folder and Reflection Summary. An agent cannot assume one.
+    page_size_params:
+    - maxChildren
+    - maxResults
+    endpoints:
+    - Source
+    - Folder
+    - Data Maintenance
+    - Reflection Summary
+    - Search
+    - Scripts
+    - User Defined Functions
+  - style: offset
+    request_params:
+    - limit
+    - offset
+    endpoints:
+    - Job Results
+    - Scripts
+  consistency: >-
+    Pagination style is NOT uniform across the API — cursor on catalog-shaped resources, offset
+    on job results. This is the single biggest ergonomics wrinkle in the contract.
+field_selection:
+  include_exclude:
+    params:
+    - include
+    - exclude
+    endpoints:
+    - Catalog
+    - Source
+    - Folder
+    - User Defined Functions
+  filtering:
+    params:
+    - filter
+    - search
+    - createdBy
+    - ownedBy
+    endpoints:
+    - Data Maintenance
+    - Reflection Summary
+    - Search
+    - Scripts
+  sorting:
+    param: orderBy
+    endpoints:
+    - Reflection Summary
+    - Scripts
+identifiers:
+  scheme: uuid
+  description: >-
+    Projects, sources, datasets, roles and version tags are 128-bit UUIDs rendered as 36
+    characters. There are no typed id prefixes.
+timestamps:
+  format: ISO 8601 UTC
+  pattern: YYYY-MM-DDTHH:mm:ss.sssZ
+  example: '2024-01-31T09:50:01.012Z'
+versioning:
+  scheme: uri-path
+  current: v0
+  note: >-
+    Dremio Cloud is at /v0/; the self-managed product is at /api/v3. The two version strings
+    belong to different products, not to a migration path between them.
+  see: lifecycle/dremio-intelligent-lakehouse-platform-lifecycle.yml
+errors:
+  envelope: json
+  documented_status_codes:
+  - 200
+  - 400
+  - 401
+  - 403
+  - 404
+  note: >-
+    Dremio documents response status codes per endpoint rather than publishing a central error
+    registry, and does not use application/problem+json (RFC 9457).
+  see: errors/dremio-intelligent-lakehouse-platform-problem-types.yml
+rate_limit_signaling:
+  documented_headers: none
+  note: >-
+    Dremio publishes hard numeric limits (1,200 API calls/minute and per-endpoint ceilings) but
+    documents no RateLimit-*/X-RateLimit-*/Retry-After response headers and no exhaustion status
+    code. An agent has to know the limits ahead of time; it cannot read remaining budget off a
+    response.
+  see: rate-limits/dremio-intelligent-lakehouse-platform-rate-limits.yml
+dry_run_mode:
+  supported: true
+  surface: cli
+  flag: --dry-run
+  description: >-
+    The Dremio Developer CLI accepts --dry-run to validate a destructive command before
+    executing it; the docs demonstrate it on `dremio reflection refresh`.
+  rest_equivalent: none-documented
+  docs: https://docs.dremio.com/dremio-cloud/ai-integration/cli/
+reversibility:
+  grade: verified
+  summary: >-
+    Dremio's strongest reversal guarantee is at the data layer, not the control layer. Table
+    writes are Apache Iceberg snapshots and can be rolled back to any retained snapshot; the
+    retention window is stated. Control-plane deletes (catalog entities, Reflections, tokens)
+    have no documented undo.
+  surfaces:
+  - surface: table data writes (INSERT / UPDATE / DELETE / MERGE / CTAS)
+    reversal: ROLLBACK TABLE <table> TO { SNAPSHOT '<id>' | TIMESTAMP '<ts>' }
+    operation_id: null
+    window: >-
+      As long as the target snapshot still exists. Snapshots are expired by VACUUM TABLE EXPIRE
+      SNAPSHOTS, whose older_than default is five days before the command runs — so the
+      documented default retention floor is five days, extendable with older_than/retain_last.
+    window_source: https://docs.dremio.com/dremio-cloud/sql/commands/vacuum-table
+    docs: https://docs.dremio.com/dremio-cloud/sql/commands/rollback-table
+    privileges: ADMIN role, table owner, or INSERT/UPDATE/DELETE on the table
+  - surface: running query / job
+    reversal: cancel
+    operation_id: cancelJob
+    window: while the job is running
+    docs: https://docs.dremio.com/dremio-cloud/api/job/
+  - surface: catalog entity delete
+    reversal: none-documented
+    operation_id: deleteCatalogEntity
+    window: null
+    note: >-
+      No undelete or restore is documented for a deleted catalog entity in Dremio Cloud. The
+      self-managed product documents an Open Catalog backup/restore procedure, which is an
+      administrator recovery path, not an API-level undo.
+  - surface: reflection delete
+    reversal: recreate
+    operation_id: deleteReflection
+    window: null
+    note: A deleted Reflection must be recreated; there is no restore.
+  caution: >-
+    No window here was inferred. The five-day figure is the documented default of VACUUM TABLE's
+    older_than parameter and nothing else; a deployment that runs VACUUM with a shorter
+    older_than has a shorter window.
+metadata:
+  wikis_and_labels: >-
+    Datasets carry wikis (rich text/Markdown) and labels, both writable through the catalog API.
+  see: https://docs.dremio.com/dremio-cloud/manage-govern/wikis-labels
+request_tracing:
+  request_id_header: none-documented
+  note: >-
+    requestId is an idempotency key in the request body, not a correlation id echoed in a
+    response header. Jobs are traced by job id instead.

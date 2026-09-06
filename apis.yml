@@ -50,7 +50,7 @@ tags_raw:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/dremio-intelligent-lakehouse-platform/refs/heads/main/apis.yml
 created: '2025-07-15'
-modified: '2026-04-28'
+modified: '2026-09-06'
 specificationVersion: '0.23'
 apis:
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform
@@ -60,6 +60,7 @@ apis:
     AI-powered analytics, an intelligent SQL query engine, an AI semantic layer, and an open catalog for
     unified metadata management and governance.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://api.dremio.cloud/v0
   tags:
   - Data
   - Analytics
@@ -91,25 +92,32 @@ apis:
   description: >-
     The Authentication API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for authentication.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Authentication
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-authentication-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-catalog-api
   name: Dremio | Intelligent Lakehouse Platform Catalog API
   description: >-
     The Catalog API from Dremio | Intelligent Lakehouse Platform — 3 operation(s) for catalog.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Catalog
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-catalog-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-catalog-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-jobs-api
   name: Dremio | Intelligent Lakehouse Platform Jobs API
   description: The Jobs API from Dremio | Intelligent Lakehouse Platform — 4 operation(s) for jobs.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Job
   tags_raw:
@@ -117,56 +125,137 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-jobs-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-jobs-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-pat-api
   name: Dremio | Intelligent Lakehouse Platform PAT API
   description: The PAT API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for pat.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - PAT
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-pat-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-pat-api-overlay.yaml
 - aid: >-
     dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-reflections-api
   name: Dremio | Intelligent Lakehouse Platform Reflections API
   description: >-
     The Reflections API from Dremio | Intelligent Lakehouse Platform — 2 operation(s) for reflections.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Reflections
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-reflections-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-reflections-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-roles-api
   name: Dremio | Intelligent Lakehouse Platform Roles API
   description: The Roles API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for roles.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Roles
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-roles-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-roles-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-scripts-api
   name: Dremio | Intelligent Lakehouse Platform Scripts API
   description: >-
     The Scripts API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for scripts.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Scripts
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-scripts-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-scripts-api-overlay.yaml
 - aid: dremio-intelligent-lakehouse-platform:dremio-intelligent-lakehouse-platform-sources-api
   name: Dremio | Intelligent Lakehouse Platform Sources API
   description: >-
     The Sources API from Dremio | Intelligent Lakehouse Platform — 1 operation(s) for sources.
   humanURL: https://www.dremio.com/platform/
+  baseURL: https://{hostname}/api/v3
   tags:
   - Sources
   properties:
   - type: OpenAPI
     url: openapi/dremio-intelligent-lakehouse-platform-sources-api-openapi.yml
+  - type: Overlay
+    url: overlays/dremio-intelligent-lakehouse-platform-sources-api-overlay.yaml
 common:
+  - type: GitHubOrganization
+    url: https://github.com/dremio
+  - type: MCPServer
+    url: mcp/dremio-intelligent-lakehouse-platform-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/dremio-intelligent-lakehouse-platform-tool-crosswalk.yml
+  - type: WellKnown
+    url: well-known/dremio-intelligent-lakehouse-platform-well-known.yml
+  - type: SecurityTxt
+    url: well-known/dremio-intelligent-lakehouse-platform-security.txt
+  - type: Security
+    url: https://www.dremio.com/platform/security/responsible-disclosure-limitations/
+  - type: TrustCenter
+    url: security/dremio-intelligent-lakehouse-platform-trust-center.yml
+  - type: Compliance
+    url: https://trust.dremio.com/
+  - type: Packages
+    url: packages/dremio-intelligent-lakehouse-platform-packages.yml
+  - type: SDKs
+    url: packages/dremio-intelligent-lakehouse-platform-packages.yml
+  - type: CLI
+    url: cli/dremio-intelligent-lakehouse-platform-cli.yml
+  - type: Conventions
+    url: conventions/dremio-intelligent-lakehouse-platform-conventions.yml
+  - type: Idempotency
+    url: conventions/dremio-intelligent-lakehouse-platform-conventions.yml
+  - type: Conformance
+    url: conformance/dremio-intelligent-lakehouse-platform-conformance.yml
+  - type: ErrorCatalog
+    url: errors/dremio-intelligent-lakehouse-platform-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/dremio-intelligent-lakehouse-platform-lifecycle.yml
+  - type: StatusPage
+    url: https://status.dremio.com/
+  - type: ChangeLog
+    url: changelog/dremio-intelligent-lakehouse-platform-changelog.yml
+  - type: OAuthScopes
+    url: scopes/dremio-intelligent-lakehouse-platform-scopes.yml
+  - type: DataModel
+    url: data-model/dremio-intelligent-lakehouse-platform-data-model.yml
+  - type: Sandbox
+    url: sandbox/dremio-intelligent-lakehouse-platform-sandbox.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: RateLimits
+    url: rate-limits/dremio-intelligent-lakehouse-platform-rate-limits.yml
+  - type: Plans
+    url: plans/dremio-intelligent-lakehouse-platform-plans-pricing.yml
+  - type: LLMsTxt
+    url: llms/dremio-intelligent-lakehouse-platform-llms.txt
+  - type: APIReference
+    url: https://docs.dremio.com/dremio-cloud/api/
+  - type: GettingStarted
+    url: https://docs.dremio.com/dremio-cloud/get-started/quick-tour
+  - type: Pricing
+    url: https://www.dremio.com/pricing/
+  - type: SignUp
+    url: https://app.dremio.cloud/signup
+  - type: TermsOfService
+    url: https://www.dremio.com/legal/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.dremio.com/legal/privacy-policy/
+  - type: Support
+    url: https://support.dremio.com/hc/en-us
   - type: AgenticAccess
     url: agentic-access/dremio-intelligent-lakehouse-platform-agentic-access.yml
   - type: VulnerabilityDisclosure
@@ -204,3 +293,8 @@ integrations:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v3

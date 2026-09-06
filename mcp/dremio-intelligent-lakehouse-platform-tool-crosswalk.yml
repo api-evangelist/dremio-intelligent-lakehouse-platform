@@ -1,0 +1,112 @@
+generated: '2026-09-06'
+method: derived
+source: mcp/dremio-intelligent-lakehouse-platform-mcp.yml + openapi/*.yml
+note: >-
+  Derived by binding the MCP tools Dremio's documentation names to the operations in this repo's
+  OpenAPI set. Two caveats are load-bearing and are not papered over. First, the live MCP
+  tools/list is OAuth-gated (HTTP 401), so the tool set is the partial list the docs print and
+  no inputSchema could be read — every binding is by name and semantics, never by schema match.
+  Second, the OpenAPI in this repo is API Evangelist's best-effort description of the Dremio
+  self-managed v3 REST API (base https://{hostname}/api/v3), while the hosted MCP server sits in
+  front of Dremio Cloud (base https://api.dremio.cloud/v0). The two surfaces overlap
+  semantically but are different deployments, which is why no row is graded higher than medium.
+surfaces:
+  openapi:
+    files:
+    - openapi/dremio-intelligent-lakehouse-platform-authentication-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-catalog-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-jobs-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-pat-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-reflections-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-roles-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-scripts-api-openapi.yml
+    - openapi/dremio-intelligent-lakehouse-platform-sources-api-openapi.yml
+    operations: 20
+    gated: false
+    note: best-effort description of the self-managed v3 API; not a Dremio-published contract
+  graphql:
+    endpoint: null
+    note: Dremio publishes no GraphQL surface.
+  mcp:
+    url: https://mcp.dremio.cloud/mcp/{project_id}
+    gated: true
+    note: tools/list returns 401 with an RFC 9728 Bearer challenge
+crosswalk:
+- tool: RunSqlQuery
+  category: query
+  rest:
+  - submitJob
+  - getJob
+  - getJobResults
+  binding: rest
+  confidence: medium
+  note: >-
+    Executing SQL and returning rows is the submit/poll/fetch triple in REST — one tool call
+    fans out to three operations. Dremio's SQL API is asynchronous: POST a query, get a job id,
+    poll status, then read results.
+- tool: GetSchemaOfTable
+  category: catalog
+  rest:
+  - getCatalogByPath
+  - getCatalogEntity
+  binding: rest
+  confidence: medium
+  note: >-
+    A table's schema is read from its catalog entity; by path is the natural agent-facing form,
+    by id the canonical one.
+- tool: GetUsefulSystemTableNames
+  category: introspection
+  rest: []
+  binding: none
+  confidence: low
+  note: >-
+    Dremio system tables (sys.project.*) are reached through SQL, not through a REST operation,
+    so this tool has no backing operationId. See mcp_only[].
+mcp_only:
+- tool: GetUsefulSystemTableNames
+  reason: >-
+    Server-side curation over SQL system tables. There is no REST endpoint that enumerates
+    system tables; the tool exists to save an agent from having to know sys.project.* by heart.
+rest_only:
+- capability: authentication
+  operations:
+  - login
+  note: The MCP server authenticates with OAuth or a PAT; no tool re-exposes login.
+- capability: personal access tokens
+  operations:
+  - listUserTokens
+  - createUserToken
+- capability: reflections
+  operations:
+  - listReflections
+  - createReflection
+  - getReflection
+  - updateReflection
+  - deleteReflection
+  note: >-
+    Reflection management is exposed to agents through the Dremio Developer CLI
+    (`dremio reflection ...`) rather than through any documented MCP tool.
+- capability: catalog write
+  operations:
+  - deleteCatalogEntity
+- capability: catalog read
+  operations:
+  - listCatalog
+- capability: scripts
+  operations:
+  - listScripts
+  - createScript
+- capability: roles
+  operations:
+  - listRoles
+- capability: sources
+  operations:
+  - listSources
+coverage:
+  tools_named: 3
+  tools_named_is_partial: true
+  tools_bound: 2
+  mcp_only: 1
+  rest_operations_total: 20
+  rest_operations_with_tool: 5
+  schemas_read_from_live_server: 0

@@ -1,0 +1,58 @@
+generated: '2026-09-06'
+method: searched
+source: https://www.dremio.com/pricing/
+note: >-
+  Dremio publishes no sandbox in the payments sense — there is no test mode, no test/live key
+  prefix pair, no magic test identifiers and no fixture or trigger tooling. What it does publish
+  are three ways to get a real, free environment to develop against. Recorded honestly rather
+  than left absent, and nothing here is invented.
+test_live_separation:
+  supported: false
+  key_prefixes: none
+  note: >-
+    A Dremio personal access token is a production credential. There is no separate test
+    credential class, so an agent developed against a trial project and an agent in production
+    hold indistinguishable tokens. Isolation has to be done with projects and RBAC.
+magic_values: []
+test_clocks: false
+fixtures: false
+environments:
+- name: Dremio Cloud trial
+  type: trial
+  url: https://www.dremio.com/get-started/
+  credit: USD 400
+  duration_days: 30
+  self_serve: partial
+  note: >-
+    The pricing page states "$400 credit for 30 days". The Get Started link redirects to
+    www.dremio.com/contact/, so the trial is not a pure self-serve signup from the marketing
+    site; the console at https://app.dremio.cloud/signup does serve a signup page.
+- name: Dremio Community Edition
+  type: free-local
+  url: https://www.dremio.com/get-started/
+  docs: https://docs.dremio.com/current/get-started/docker
+  self_serve: true
+  note: >-
+    A free query engine that runs on a local machine or server, documented with a Docker
+    quickstart. This is the closest thing to a sandbox Dremio ships: it exposes the same
+    self-managed REST v3 surface this repo describes, at http://localhost:9047, and the docs walk
+    through minting a PAT against it.
+- name: Interactive product demo
+  type: demo
+  url: https://www.dremio.com/pricing/
+  note: A guided interactive demo linked from the pricing page. No credentials, no API access.
+console:
+  url: https://app.dremio.cloud/
+  signup: https://app.dremio.cloud/signup
+  description: >-
+    The Dremio Cloud console — SQL Runner, catalog browser, Jobs page and the AI Agent chat.
+    Documented in the Quick Tour.
+  docs: https://docs.dremio.com/dremio-cloud/get-started/quick-tour
+dry_run:
+  supported: true
+  surface: cli
+  flag: --dry-run
+  note: >-
+    `dremio reflection refresh <id> --dry-run` validates a destructive command before executing
+    it. This is the only rehearsal mechanism Dremio documents, and it lives in the CLI rather
+    than the REST API.

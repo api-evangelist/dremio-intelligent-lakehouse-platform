@@ -6,9 +6,8 @@
 ## Dremio Cloud
 
 ### Get Started
-- [Sign Up](https://www.dremio.com/get-started): Create a Dremio Cloud account and your first project at dremio.com/get-started
 - [Quick Tour](https://docs.dremio.com/dremio-cloud/get-started/quick-tour): Hands-on introduction to the Dremio console — covers the Home, Open Catalog, SQL Runner, and Jobs pages and how to navigate the interface
-- [Use Cases](https://docs.dremio.com/dremio-cloud/get-started/use-case): Step-by-step guide to building your first agentic lakehouse use case using your own data during a Dremio Cloud trial
+- [Use Cases](https://docs.dremio.com/dremio-cloud/get-started/use-case): Step-by-step guide to building your first agentic lakehouse use case using your own data.
 
 ### About
 - [Architecture](https://docs.dremio.com/dremio-cloud/about/architecture): How Dremio Cloud is architected — data plane (Amazon S3 / object storage), execution plane (MPP model with caching layers), and control plane hosted by Dremio
@@ -90,9 +89,8 @@
 ## Dremio Enterprise
 
 ### Get Started
-- [Overview](https://docs.dremio.com/current/get-started/): Choose between the Enterprise Edition Free Trial on Kubernetes (all features unlocked) or the Community Edition on Docker (limited features, for local testing and evaluation)
+- [Overview](https://docs.dremio.com/current/get-started/): Use the Community Edition on Docker (limited features, for local testing and evaluation)
 - [Community Edition on Docker](https://docs.dremio.com/current/get-started/docker): Learn how to deploy the Community Edition of Dremio locally using Docker for testing and evaluation
-- [Enterprise Edition Free Trial](https://docs.dremio.com/current/get-started/kubernetes-trial): Learn how to deploy the Enterprise Edition Free Trial on Kubernetes with all features unlocked
 
 ### What is Dremio
 - [Architecture](https://docs.dremio.com/current/what-is-dremio/architecture): Learn how Dremio Enterprise is architected — columnar execution engine, Apache Arrow in-memory processing, distributed execution model, Reflections, and integrations with BI tools and cloud storage
@@ -131,7 +129,7 @@
 - [Workloads](https://docs.dremio.com/current/admin/workloads/): Learn how to manage job workloads using queue control and job queues to prioritize and limit query resource usage
 - [Automated Backups](https://docs.dremio.com/current/admin/automated-backups): Learn how to enable and configure automated backups of Dremio metadata on a scheduled basis
 - [Model Providers](https://docs.dremio.com/current/admin/model-providers/): Learn how to configure external LLM providers for Dremio's AI Agent and AI functions in Enterprise deployments
-- [Licensing](https://docs.dremio.com/current/admin/licensing/): Learn about Dremio Enterprise licensing requirements — including license key setup for Kubernetes deployments and free trial details
+- [Licensing](https://docs.dremio.com/current/admin/licensing/): Learn about Dremio Enterprise licensing requirements — including license key setup for Kubernetes deployments
 
 ### Security
 - [Authentication](https://docs.dremio.com/current/security/authentication/): Learn how to authenticate to Dremio Enterprise — covers SSO, LDAP, username/password, Personal Access Tokens (PAT), OAuth, and JWT exchange for console access, SQL clients, and machine-to-machine applications
