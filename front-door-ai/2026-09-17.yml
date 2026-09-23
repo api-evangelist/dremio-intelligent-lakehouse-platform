@@ -1,0 +1,34 @@
+# Front Door AI Index — dremio-intelligent-lakehouse-platform — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: dremio-intelligent-lakehouse-platform
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.dremio.com
+  final_host: www.dremio.com
+  ownership: shared
+  owner: dremio
+  shares_host_with:
+  - dremio
+  inherited_from: null
+  verdict: scored
+  score: null
+  host_score: 43
+  density: null
+  words: 1225
+  tiers:
+    agentic: 21
+    core: 18
+    model: 4
+  ambiguous: 19
+  top_terms:
+    agent: 19
+    AI: 18
+    agentic: 10
+    AI agent: 8
+    Claude: 2
+    MCP: 2
+    ChatGPT: 1
+    Gemini: 1
+    llms.txt: 1
