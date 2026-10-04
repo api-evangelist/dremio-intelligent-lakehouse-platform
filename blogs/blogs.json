@@ -4,12 +4,11 @@
     {
       "source": "https://www.dremio.com/blog/feed/",
       "feed_url": "https://www.dremio.com/blog/feed/",
-      "title": "",
       "saved": 0,
-      "method": "feed"
+      "error": "no_feed_no_posts"
     }
   ],
-  "fetched": "2026-09-19T20:17:39Z",
+  "fetched": "2026-10-03T12:30:02Z",
   "post_count": 43,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
