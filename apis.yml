@@ -196,6 +196,8 @@ apis:
   - type: Overlay
     url: overlays/dremio-intelligent-lakehouse-platform-sources-api-overlay.yaml
 common:
+  - type: FinOps
+    url: finops/dremio-intelligent-lakehouse-platform-finops.yml
   - type: GitHubOrganization
     url: https://github.com/dremio
   - type: MCPServer
