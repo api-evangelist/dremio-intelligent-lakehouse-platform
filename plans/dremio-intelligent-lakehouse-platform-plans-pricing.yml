@@ -90,3 +90,30 @@ published_figures:
   uptime_claim_note: >-
     A marketing figure on the pricing page. No SLA document, credit schedule or measurement
     method is published to back it — see lifecycle/.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  units: []
+  plans:
+  - name: Dremio Cloud
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    periods: []
+  - name: Dremio Enterprise
+    access: other
+    model: metered
+    model_how: stated
+    units: []
+    periods: []
+  - name: Dremio Community Edition
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods: []
