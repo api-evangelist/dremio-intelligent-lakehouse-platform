@@ -1,0 +1,60 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.dremio.com/pricing/
+sources:
+- https://www.dremio.com/pricing/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-28'
+  evidence: DREMIO ENTERPRISE Complete control and customization, deploy anywhere with full flexibility
+    over infrastructure, security, and compliance.
+  free_edition: Dremio Community Edition
+  managed_tier: DREMIO CLOUD
+published: true
+note: 'Pricing page lists Dremio Cloud at $0.20 per DCU (time-based consumption: engine size x minutes)
+  with a 30-day/$400 credit trial, and Dremio Enterprise as contact-sales consumption-based self-managed.
+  A free Community Edition is referenced in navigation only.'
+plan_count: 2
+currency: USD
+plans:
+- name: Dremio Cloud
+  price_text: $0.20 per DCU
+  price: 0.2
+  currency: USD
+  period: per-use
+  unit: DCU (Dremio Compute Unit)
+  included_quota: 'Free trial: $400 credit for 30 days'
+- name: Dremio Enterprise
+  price_text: Contact Sales
+  period: none
+  included_quota: Consumption based pricing; self-hosted on K8S (on prem) or cloud
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Dremio Cloud
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Dremio Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
