@@ -5,9 +5,18 @@ artifacts:
   agentic-access/dremio-intelligent-lakehouse-platform-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/dremio-intelligent-lakehouse-platform-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/dremio-intelligent-lakehouse-platform-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/dremio-intelligent-lakehouse-platform-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -68,14 +77,23 @@ artifacts:
   collections/dremio-intelligent-lakehouse-platform.postman_collection.json:
     method: derived
     evidence: openapi/dremio-intelligent-lakehouse-platform
+  compliance/dremio-intelligent-lakehouse-platform-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
   conformance/dremio-intelligent-lakehouse-platform-conformance.yml:
     method: searched
     evidence: declared in the artifact
   conventions/dremio-intelligent-lakehouse-platform-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/dremio-intelligent-lakehouse-platform-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/dremio-intelligent-lakehouse-platform-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/dremio-intelligent-lakehouse-platform-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/dremio-intelligent-lakehouse-platform-problem-types.yml:
     method: searched
@@ -92,7 +110,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -156,6 +174,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/dremio-intelligent-lakehouse-platform-lifecycle.yml:
@@ -255,6 +276,9 @@ artifacts:
   plans/dremio-intelligent-lakehouse-platform-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/dremio-intelligent-lakehouse-platform-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/dremio-intelligent-lakehouse-platform-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -293,6 +317,9 @@ artifacts:
     evidence: declared in the artifact
   sla/dremio-intelligent-lakehouse-platform-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/dremio-intelligent-lakehouse-platform-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   well-known/dremio-intelligent-lakehouse-platform-login-oauth-authorization-server.json:
     method: unknown
